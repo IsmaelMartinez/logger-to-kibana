@@ -7,13 +7,13 @@ def readFile(filename: str) -> dict:
         function_name = None
         for line in file:
             if re.findall(r'def', line):
-                function_name = re.findall(r'.+?(?=\()',line.strip('def '))[0]
+                function_name = re.findall(r'(?<=def ).*?(?=\()',line)[0]
                 results[function_name] = {'function_name': function_name, 'logs': []}
             elif re.findall(r'LOG.info', line):
-                message = strip_log_type_message(line, 'LOG.info("')
+                message = re.findall(r'(?<=LOG.info\(\").*?(?=\")',line)
                 results[function_name]['logs'].append({ 'type': 'info', 'message': message })
             elif re.findall(r'LOG.error', line):
-                message = strip_log_type_message(line, 'LOG.error("')
+                message = re.findall(r'(?<=LOG.error\(\").*?(?=\")',line)
                 results[function_name]['logs'].append({ 'type': 'error', 'message': message })
     return results
 
