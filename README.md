@@ -1,4 +1,4 @@
-# KibaVisualIsma
+# kiba-visua-log
 
 ## This project is currently in early development stage. Use it at your own risk
 
@@ -102,6 +102,8 @@ def lambda_handler(event: dict, context):
     ...
 )
 ```
+
+Will return the next object:
 
 ```python
 {

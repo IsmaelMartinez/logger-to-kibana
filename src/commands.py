@@ -10,7 +10,7 @@ def commands():
 
 @commands.command("process", short_help="Process the file returning a JSON")
 @click.option("--file", "-f", required=True, metavar="str", help="The file to read")
-def process(file) -> dict:
+def process(file: str):
     print(processor.readFile(file))
 
 @commands.command("process_and_generate", short_help="Process the file and generate visualisation")
