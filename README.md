@@ -1,5 +1,7 @@
 # logger_to_kibana
 
+[![Build Status](https://dev.azure.com/ismaelmartinez0550/logger_to_kibana/_apis/build/status/IsmaelMartinez.logger_to_kibana?branchName=master)](https://dev.azure.com/ismaelmartinez0550/logger_to_kibana/_build/latest?definitionId=2&branchName=master)
+
 ## This project is currently in early development stage. Use it at your own risk
 
 ---
