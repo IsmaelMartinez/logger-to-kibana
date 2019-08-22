@@ -1,4 +1,4 @@
-# kiba-visua-log
+# logger_to_kibana
 
 ## This project is currently in early development stage. Use it at your own risk
 
