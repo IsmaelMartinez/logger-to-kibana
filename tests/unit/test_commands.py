@@ -1,3 +1,6 @@
+"""
+Tests for commands.py
+"""
 # import unittest
 # from src.commands import commands
 # # #
