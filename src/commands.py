@@ -14,7 +14,8 @@ def commands():
 
 
 @commands.command("process", short_help="Process the file returning a JSON")
-@click.option("--file", "-f", required=True, metavar="str", help="The file to read")
+@click.option("--file", "-f",
+              required=True, metavar="str", help="The file to read")
 def process(file):
     """
     Process the file and print the processed results
@@ -23,16 +24,18 @@ def process(file):
 
 
 @commands.command(
-    "process_and_generate", short_help="Process the file and generate visualisation"
+    "process_and_generate",
+    short_help="Process the file and generate visualisation"
 )
-@click.option("--file", "-f", required=True, metavar="str", help="The file to read")
+@click.option("--file", "-f",
+              required=True, metavar="str", help="The file to read")
 def process_and_generate(file):
     """
     Process the file and generates the visualisation in kibana
     """
-    processed_file_content = processor.read_file(file)
+    processed = processor.read_file(file)
 
-    visualisations_to_generate = remove_functions_without_logs(processed_file_content)
+    visualisations_to_generate = remove_functions_without_logs(processed)
 
     for (key, value) in visualisations_to_generate.items():
         kib.generate_visualisation(key, value)

@@ -27,10 +27,10 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pylint src
-  displayName: 'pylint'
+    flake8 src test
+  displayName: 'Run Lint Tests'
 
 - script: |
     pip install pytest-azurepipelines
-    pytest --cov=src --cov-report xml tests
-  displayName: 'pytest'
+    pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+  displayName: 'Run unit tests'

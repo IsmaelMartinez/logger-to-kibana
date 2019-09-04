@@ -3,7 +3,7 @@ Tests for file_processor.py
 """
 import src.file_processor as processor
 
-# @patch('src.commands.processor')
+
 def test_read_file():
 
     assert processor.read_file("example.py") == {

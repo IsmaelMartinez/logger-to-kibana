@@ -8,7 +8,11 @@ from src.utils.vis_state import VisState
 
 
 @mark.parametrize(
-    "inp,expected", [("Tost", "[Generated] - Tost"), ("Test", "[Generated] - Test")]
+    "inp,expected",
+    [
+        ("Tost", "[Generated] - Tost"),
+        ("Test", "[Generated] - Test")
+    ]
 )
 def test_contructor(inp, expected):
     assert expected == VisState(inp).visState["title"]
@@ -27,7 +31,10 @@ def test_add_value_error():
 
 @mark.parametrize(
     "inp,expected",
-    [("", "empty_vis_state_results.json"), ("Valid", "valid_vis_state_results.json")],
+    [
+        ("", "empty_vis_state_results.json"),
+        ("Valid", "valid_vis_state_results.json")
+    ],
 )
 def test_get(inp, expected):
     assert get_test_results_json_file(expected) == VisState(inp).get()
@@ -35,7 +42,10 @@ def test_get(inp, expected):
 
 @mark.parametrize(
     "inp,expected",
-    [("One", "one_vis_state_results.json"), ("Two", "two_vis_state_results.json")],
+    [
+        ("One", "one_vis_state_results.json"),
+        ("Two", "two_vis_state_results.json")
+    ],
 )
 def test_add_one(inp, expected):
     vis = VisState("Valid")
@@ -44,5 +54,5 @@ def test_add_one(inp, expected):
 
 
 def get_test_results_json_file(name: str) -> dict:
-    with open(os.path.abspath(f'tests/unit/resources/' + name)) as file:
+    with open(os.path.abspath(f"tests/unit/resources/" + name)) as file:
         return json.loads(file.read())

@@ -1,5 +1,6 @@
 """
-The file_processor is in charge of processing the files looking for the log_mappings
+The file_processor is in charge of processing the files
+looking for the log_mappings
 to generate an object with the function, log_message and level
 """
 
@@ -48,7 +49,10 @@ def read_file(filename: str) -> dict:
         for line in file:
             if re.findall(FUNCTION_MAPPING["detector"], line):
                 function_name = re.findall(FUNCTION_MAPPING["filter"], line)[0]
-                RESULTS[function_name] = {"function_name": function_name, "logs": []}
+                RESULTS[function_name] = {
+                    "function_name": function_name,
+                    "logs": []
+                }
             else:
                 process_with_log_mapping(function_name, line)
     return RESULTS
