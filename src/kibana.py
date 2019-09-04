@@ -1,10 +1,10 @@
 import requests
 import json
-from src.utils import visualisation, visState
+from src.utils import visualisation, vis_state
 
 
 def generate_visualisation(key: str, values: dict):
-    state = visState.VisState(key)
+    state = vis_state.VisState(key)
 
     logs = values['logs']
     for i in range(len(logs)):

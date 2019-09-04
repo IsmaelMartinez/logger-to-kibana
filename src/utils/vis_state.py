@@ -1,9 +1,11 @@
 import copy
-import json
-
 
 
 class VisState:
+    """
+    VisState handles the generation of Metric Visualisation Objects
+    that follow the Kibana format
+    """
     metricGroupFilter = {
         "input": {
             "query": ""
@@ -64,16 +66,22 @@ class VisState:
         ]
     }
 
-    def __init__(self, key: str ):
+    def __init__(self, key: str):
         if not isinstance(key, str):
             raise ValueError("key must be a string")
         self.visState['title'] = '[Generated] - ' + str(key)
 
     def add(self, log_message: str):
+        """
+        Add a new metric object that will search for the log_message provided
+        """
         if not isinstance(log_message, str):
             raise ValueError("log_message must be a string")
         self.metricGroupFilter['input']['query'] = log_message
         self.visState['aggs'][1]['params']['filters'].append(copy.deepcopy(self.metricGroupFilter))
 
     def get(self):
+        """
+        Get the visState object.
+        """
         return self.visState

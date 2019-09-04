@@ -1,5 +1,5 @@
 from pytest import mark, raises
-from src.utils.visState import VisState
+from src.utils.vis_state import VisState
 import os
 import json
 
@@ -16,12 +16,6 @@ def test_contructor_value_error():
     with raises(ValueError):
         VisState(None)
 
-# @mark.parametrize("input,expected",
-#     [
-#         (["One"], "one_visState_results.json"),
-#         # (["One","Two"], "two_visState_results.json"),
-#     ])
-
 def test_add_value_error():
     vis = VisState("Valid")
     with raises(ValueError):
@@ -29,16 +23,16 @@ def test_add_value_error():
 
 @mark.parametrize("input,expected",
     [
-        ("", "empty_visState_results.json"),
-        ("Valid", "valid_visState_results.json")
+        ("", "empty_vis_state_results.json"),
+        ("Valid", "valid_vis_state_results.json")
     ])
 def test_get(input, expected):
     assert get_test_results_json_file(expected) == VisState(input).get()
 
 @mark.parametrize("input,expected",
     [
-        ("One", "one_visState_results.json"),
-        ("Two", "two_visState_results.json"),
+        ("One", "one_vis_state_results.json"),
+        ("Two", "two_vis_state_results.json"),
     ])
 def test_add_one(input, expected):
     vis = VisState("Valid")

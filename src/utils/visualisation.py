@@ -17,6 +17,9 @@ visualisation = {
 }
 
 class Visualisation:
+    """
+    Visualisation handles the basic structure for kibana visualisations
+    """
     def __init__(self, key, visState):
         visualisation['title'] = '[Generated] - ' + key
         visualisation['visState'] = json.dumps(visState)
