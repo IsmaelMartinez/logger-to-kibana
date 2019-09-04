@@ -10,8 +10,6 @@ pool:
   vmImage: 'ubuntu-latest'
 strategy:
   matrix:
-    Python35:
-      python.version: '3.5'
     Python36:
       python.version: '3.6'
     Python37:
@@ -29,6 +27,10 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    pip install pytest pytest-azurepipelines
-    pytest
+    pylint src
+  displayName: 'pylint'
+
+- script: |
+    pip install pytest-azurepipelines
+    pytest --cov=src tests
   displayName: 'pytest'
