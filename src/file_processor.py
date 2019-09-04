@@ -44,7 +44,6 @@ def process_with_log_mapping(function_name: str, line: str):
     for mapping in log_mapping:
         if re.findall(mapping['detector'], line):
             message = re.findall(mapping['filter'], line)
-            # import pdb; pdb.set_trace()
             if message:
                 results[function_name]['logs'].append({ 'type': mapping['type'], 'message': message[0] })
                 return
