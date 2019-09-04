@@ -8,7 +8,7 @@ from src.utils.vis_state import VisState
 
 
 @mark.parametrize(
-    "input,expected", [("Tost", "[Generated] - Tost"), ("Test", "[Generated] - Test")]
+    "inp,expected", [("Tost", "[Generated] - Tost"), ("Test", "[Generated] - Test")]
 )
 def test_contructor(inp, expected):
     assert expected == VisState(inp).visState["title"]
@@ -26,7 +26,7 @@ def test_add_value_error():
 
 
 @mark.parametrize(
-    "input,expected",
+    "inp,expected",
     [("", "empty_vis_state_results.json"), ("Valid", "valid_vis_state_results.json")],
 )
 def test_get(inp, expected):
@@ -34,7 +34,7 @@ def test_get(inp, expected):
 
 
 @mark.parametrize(
-    "input,expected",
+    "inp,expected",
     [("One", "one_vis_state_results.json"), ("Two", "two_vis_state_results.json")],
 )
 def test_add_one(inp, expected):
