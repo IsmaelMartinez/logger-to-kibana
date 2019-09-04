@@ -44,5 +44,5 @@ def test_add_one(inp, expected):
 
 
 def get_test_results_json_file(name: str) -> dict:
-    with open(os.path.abspath(f"tests/unit/resources/" + name)) as file:
+    with open(os.path.abspath(f'tests/unit/resources/' + name)) as file:
         return json.loads(file.read())
