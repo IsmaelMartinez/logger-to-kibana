@@ -13,7 +13,7 @@ def generate_visualisation(key: str, values: dict):
     state = vis_state.VisState(key)
 
     logs = values["logs"]
-    for i in enumerate(logs):
+    for i in range(len(logs)):
         state.add(logs[i]["message"])
 
     vis = visualisation.Visualisation(key, state.get())

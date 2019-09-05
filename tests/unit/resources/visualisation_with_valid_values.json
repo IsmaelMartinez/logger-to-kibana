@@ -1,0 +1,7 @@
+{
+    "title": "[Generated] - Valid",
+    "visState": "{\"some\": \"here\"}",
+    "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\": \"da4a6380-c1f4-11e9-9258-a752fa2ba2cb\", \"query\": {\"query\": \"\", \"language\": \"lucene\"}, \"filter\": []}"
+    }
+}
