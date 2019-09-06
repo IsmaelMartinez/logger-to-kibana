@@ -10,11 +10,7 @@ def generate_visualisation(key: str, values: dict):
     """
     Generates the visualisation using the key and values provided
     """
-    state = vis_state.VisState(key)
-
-    logs = values["logs"]
-    for i in range(len(logs)):
-        state.add(logs[i]["message"])
+    state = vis_state.VisState(key, values["logs"])
 
     vis = visualisation.Visualisation(key, state.get())
 

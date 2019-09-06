@@ -54,10 +54,19 @@ class VisState:
         ],
     }
 
-    def __init__(self, key: str):
+    def __init__(self, key: str, logs: []):
+        self.reset()
+        self.set_title(key)
+        self.set_logs(logs)
+
+    def set_title(self, key: str):
         if not isinstance(key, str):
             raise ValueError("key must be a string")
         self.visState["title"] = "[Generated] - " + str(key)
+
+    def set_logs(self, logs: []):
+        for i in range(len(logs)):
+            self.add(logs[i]["message"])
 
     def add(self, log_message: str):
         """
@@ -69,6 +78,10 @@ class VisState:
         self.visState["aggs"][1]["params"]["filters"].append(
             copy.deepcopy(self.metricGroupFilter)
         )
+
+    def reset(self):
+        self.visState["title"] = ""
+        self.visState["aggs"][1]["params"]["filters"] = []
 
     def get(self):
         """

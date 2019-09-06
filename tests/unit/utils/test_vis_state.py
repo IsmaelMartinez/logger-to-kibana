@@ -8,48 +8,61 @@ from src.utils.vis_state import VisState
 
 
 @mark.parametrize(
-    "inp,expected",
+    "key, logs, expected",
+    [
+        ("Tost", [], "[Generated] - Tost"),
+        ("Test", [],  "[Generated] - Test")
+    ]
+)
+def test_contructor(key, logs, expected):
+    assert expected == VisState(key, logs).visState["title"]
+
+
+@mark.parametrize(
+    "key,expected",
     [
         ("Tost", "[Generated] - Tost"),
         ("Test", "[Generated] - Test")
     ]
 )
-def test_contructor(inp, expected):
-    assert expected == VisState(inp).visState["title"]
+def test_set_title(key, expected):
+    vis_state = VisState(key, [])
+    assert expected == vis_state.visState["title"]
 
 
-def test_contructor_value_error():
+def test_set_title_value_error():
     with raises(ValueError):
-        VisState(None)
+        VisState(None, [])
 
 
 def test_add_value_error():
-    vis = VisState("Valid")
+    vis = VisState("Valid", [])
     with raises(ValueError):
         vis.add(None)
 
 
 @mark.parametrize(
-    "inp,expected",
+    "key,expected",
     [
         ("", "empty_vis_state_results.json"),
         ("Valid", "valid_vis_state_results.json")
     ],
 )
-def test_get(inp, expected):
-    assert get_test_results_json_file(expected) == VisState(inp).get()
+def test_get(key, expected):
+    assert get_test_results_json_file(expected) == VisState(key, []).get()
 
 
 @mark.parametrize(
-    "inp,expected",
+    "key,expected",
     [
-        ("One", "one_vis_state_results.json"),
-        ("Two", "two_vis_state_results.json")
+        (["One"], "one_vis_state_results.json"),
+        (["One", "Two"], "two_vis_state_results.json")
     ],
 )
-def test_add_one(inp, expected):
-    vis = VisState("Valid")
-    vis.add(inp)
+def test_add_one(key, expected):
+    vis = VisState("Valid", [])
+    for value in key:
+        vis.add(value)
     assert get_test_results_json_file(expected) == vis.get()
 
 

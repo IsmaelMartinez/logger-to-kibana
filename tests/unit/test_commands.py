@@ -1,6 +1,21 @@
 """
 Tests for commands.py
 """
+
+# import pytest
+import src.commands as commands
+from unittest.mock import patch
+
+
+@patch.object(commands, "processor")
+def test_process(commands):
+    commands.process()
+
+
+@patch.object(commands, "processor")
+def test_process_and_generate(commands):
+    commands.process_and_generate()
+
 # import unittest
 # from src.commands import commands
 # # #

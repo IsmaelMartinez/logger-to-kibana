@@ -20,6 +20,7 @@ class Visualisation:
     }
 
     def __init__(self, key: str, vis_state: dict):
+        self.reset()
         self.set_title(key)
         self.set_vis_state(vis_state)
         self.visualisation["kibanaSavedObjectMeta"] = self.kibana_meta
@@ -39,6 +40,11 @@ class Visualisation:
         if not isinstance(vis_state, dict):
             raise ValueError("vis_state should be a dict")
         self.visualisation["visState"] = json.dumps(vis_state)
+
+    def reset(self):
+        self.visualisation["kibanaSavedObjectMeta"] = None
+        self.visualisation["title"] = ""
+        self.visualisation["visState"] = "visState"
 
     def get(self):
         """
