@@ -10,52 +10,50 @@ class VisState:
     that follow the Kibana format
     """
 
-    metricGroupFilter = {"input": {"query": ""}, "label": ""}
-
-    visState = {
-        "title": "",
-        "type": "metric",
-        "params": {
-            "addTooltip": True,
-            "addLegend": False,
+    def __init__(self, key: str, logs: []):
+        self.metricGroupFilter = {"input": {"query": ""}, "label": ""}
+        self.visState = {
+            "title": "",
             "type": "metric",
-            "metric": {
-                "percentageMode": False,
-                "useRanges": False,
-                "colorSchema": "Green to Red",
-                "metricColorMode": "None",
-                "colorsRange": [{"from": 0, "to": 10000}],
-                "labels": {"show": True},
-                "invertColors": False,
-                "style": {
-                    "bgFill": "#000",
-                    "bgColor": False,
-                    "labelColor": False,
-                    "subText": "",
-                    "fontSize": 60,
+            "params": {
+                "addTooltip": True,
+                "addLegend": False,
+                "type": "metric",
+                "metric": {
+                    "percentageMode": False,
+                    "useRanges": False,
+                    "colorSchema": "Green to Red",
+                    "metricColorMode": "None",
+                    "colorsRange": [{"from": 0, "to": 10000}],
+                    "labels": {"show": True},
+                    "invertColors": False,
+                    "style": {
+                        "bgFill": "#000",
+                        "bgColor": False,
+                        "labelColor": False,
+                        "subText": "",
+                        "fontSize": 60,
+                    },
                 },
             },
-        },
-        "aggs": [
-            {
-                "id": "1",
-                "enabled": True,
-                "type": "count",
-                "schema": "metric",
-                "params": {},
-            },
-            {
-                "id": "2",
-                "enabled": True,
-                "type": "filters",
-                "schema": "group",
-                "params": {"filters": []},
-            },
-        ],
-    }
+            "aggs": [
+                {
+                    "id": "1",
+                    "enabled": True,
+                    "type": "count",
+                    "schema": "metric",
+                    "params": {},
+                },
+                {
+                    "id": "2",
+                    "enabled": True,
+                    "type": "filters",
+                    "schema": "group",
+                    "params": {"filters": []},
+                },
+            ],
+        }
 
-    def __init__(self, key: str, logs: []):
-        self.reset()
         self.set_title(key)
         self.set_logs(logs)
 
@@ -78,10 +76,6 @@ class VisState:
         self.visState["aggs"][1]["params"]["filters"].append(
             copy.deepcopy(self.metricGroupFilter)
         )
-
-    def reset(self):
-        self.visState["title"] = ""
-        self.visState["aggs"][1]["params"]["filters"] = []
 
     def get(self):
         """

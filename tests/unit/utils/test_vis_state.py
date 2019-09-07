@@ -4,6 +4,7 @@ Tests for vis_state.py
 import json
 import os
 from pytest import mark, raises
+from unittest.mock import patch
 from src.utils.vis_state import VisState
 
 
@@ -33,6 +34,20 @@ def test_set_title(key, expected):
 def test_set_title_value_error():
     with raises(ValueError):
         VisState(None, [])
+
+
+@patch.object(VisState, "add")
+@mark.parametrize(
+    "logs, expected",
+    [
+        ([{'message': 'Test'}], 1),
+        ([{'message': 'Test'}, {'message': 'Test2'}, {'message': 'Test3'}], 3)
+    ]
+)
+def test_set_logs(add, logs, expected):
+    vis_state = VisState("Test", [])
+    vis_state.set_logs(logs)
+    assert add.call_count == expected
 
 
 def test_add_value_error():

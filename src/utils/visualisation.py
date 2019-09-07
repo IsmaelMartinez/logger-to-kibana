@@ -8,19 +8,18 @@ class Visualisation:
     """
     Visualisation handles the basic structure for kibana visualisations
     """
-    visualisation = {"title": "" "visState"}
-    kibana_meta = {
-        "searchSourceJSON": json.dumps(
-            {
-                "index": "da4a6380-c1f4-11e9-9258-a752fa2ba2cb",
-                "query": {"query": "", "language": "lucene"},
-                "filter": [],
-            }
-        )
-    }
 
     def __init__(self, key: str, vis_state: dict):
-        self.reset()
+        self.visualisation = {"title": "" "visState"}
+        self.kibana_meta = {
+            "searchSourceJSON": json.dumps(
+                {
+                    "index": "da4a6380-c1f4-11e9-9258-a752fa2ba2cb",
+                    "query": {"query": "", "language": "lucene"},
+                    "filter": [],
+                }
+            )
+        }
         self.set_title(key)
         self.set_vis_state(vis_state)
         self.visualisation["kibanaSavedObjectMeta"] = self.kibana_meta
@@ -40,11 +39,6 @@ class Visualisation:
         if not isinstance(vis_state, dict):
             raise ValueError("vis_state should be a dict")
         self.visualisation["visState"] = json.dumps(vis_state)
-
-    def reset(self):
-        self.visualisation["kibanaSavedObjectMeta"] = None
-        self.visualisation["title"] = ""
-        self.visualisation["visState"] = "visState"
 
     def get(self):
         """
