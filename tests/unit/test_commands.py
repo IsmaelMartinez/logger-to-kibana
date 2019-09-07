@@ -5,19 +5,31 @@ Tests for commands.py
 # import pytest
 import src.commands as commands
 from unittest.mock import patch
+from pytest import mark
 
 
-@patch.object(commands, "processor")
-def test_process(commands):
-    commands.process()
+@patch.object(commands.processor, "read_file")
+@mark.parametrize(
+    "files, expected",
+    [
+        (["one"], 1),
+        (["one", "two", "three"], 3),
+    ]
+)
+def test_process_file(processor, files, expected):
+    for fileName in files:
+        commands.process_file(fileName)
+    assert processor.call_count == expected
 
 
-@patch.object(commands, "processor")
-def test_process_and_generate(commands):
-    commands.process_and_generate()
+@patch.object(commands, "remove_functions_without_logs")
+@patch.object(commands.processor, "read_file")
+def test_process_and_generate_visualisations(read_file, remove_functions):
+    commands.process_and_generate_visualisations("file")
+    assert read_file.call_count == 1
+    assert remove_functions.call_count == 1
 
-# import unittest
-# from src.commands import commands
+
 # # #
 # # Probably make this the "integration test"
 # # #

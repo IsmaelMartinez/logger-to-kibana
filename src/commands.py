@@ -20,6 +20,10 @@ def process(file):
     """
     Process the file and print the processed results
     """
+    process_file(file)
+
+
+def process_file(file: dict):
     print(processor.read_file(file))
 
 
@@ -33,6 +37,10 @@ def process_and_generate(file):
     """
     Process the file and generates the visualisation in kibana
     """
+    process_and_generate_visualisations(file)
+
+
+def process_and_generate_visualisations(file: dict):
     processed = processor.read_file(file)
 
     visualisations_to_generate = remove_functions_without_logs(processed)
