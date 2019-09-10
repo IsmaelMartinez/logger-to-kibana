@@ -33,7 +33,7 @@ def process_file(file: dict):
 )
 @click.option("--file", "-f",
               required=True, metavar="str", help="The file to read")
-def process_and_generate(file):
+def process_and_generate(file: dict):
     """
     Process the file and generates the visualisation in kibana
     """
