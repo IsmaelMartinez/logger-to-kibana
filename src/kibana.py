@@ -17,8 +17,7 @@ def generate_visualisation(key: str, values: dict):
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": vis.get()}
     baseUrl = "http://localhost:5601"
-    url = f"{baseUrl}/api/saved_objects/visualization/generated-{key}\
-        ?overwrite=true"
+    url = f"{baseUrl}/api/saved_objects/visualization/generated-{key}?overwrite=true"
 
     response = requests.post(
         url,

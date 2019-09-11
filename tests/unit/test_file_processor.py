@@ -6,7 +6,7 @@ import src.file_processor as processor
 
 def test_read_file():
 
-    assert processor.read_file("example.py") == {
+    assert processor.read_file("tests/unit/resources/example.py") == {
         "lambda_handler": {
             "function_name": "lambda_handler",
             "logs": [

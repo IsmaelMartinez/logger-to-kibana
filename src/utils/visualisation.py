@@ -14,7 +14,7 @@ class Visualisation:
         self.kibana_meta = {
             "searchSourceJSON": json.dumps(
                 {
-                    "index": "da4a6380-c1f4-11e9-9258-a752fa2ba2cb",
+                    "index": "90943e30-9a47-11e8-b64d-95841ca0b247",
                     "query": {"query": "", "language": "lucene"},
                     "filter": [],
                 }
