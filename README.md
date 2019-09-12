@@ -10,7 +10,7 @@ This project is inteded to generate view from the log messages encountered.
 To get the programs help just type:
 
 ```bash
-main.py
+python main.py
 ```
 
 This returns:
@@ -37,7 +37,7 @@ Process a file and prints out the processed functions/logs
 To execute the command run:
 
 ```bash
-main.py process -f <file_location>.py
+python main.py process -f <file_location>.py
 ```
 
 ## process_and_generate
@@ -47,7 +47,7 @@ Process a file and generates a metric visualisation in kibana (currently in loca
 To execute the command run:
 
 ```bash
-main.py process_and_generate -f <file_location>.py
+python main.py process_and_generate -f <file_location>.py -p <project_name>
 ```
 
 ## How does it work
