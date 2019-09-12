@@ -16,14 +16,14 @@ def commands():
 @commands.command("process", short_help="Process the file returning a JSON")
 @click.option("--file", "-f",
               required=True, metavar="str", help="The file to read")
-def process(file):
+def process(file: str):
     """
     Process the file and print the processed results
     """
     process_file(file)
 
 
-def process_file(file: dict):
+def process_file(file: str):
     print(processor.read_file(file))
 
 
@@ -33,20 +33,22 @@ def process_file(file: dict):
 )
 @click.option("--file", "-f",
               required=True, metavar="str", help="The file to read")
-def process_and_generate(file: dict):
+@click.option("--project", "-p",
+              required=True, metavar="str", help="Project name")
+def process_and_generate(file: str, project: str):
     """
     Process the file and generates the visualisation in kibana
     """
-    process_and_generate_visualisations(file)
+    process_and_generate_visualisations(file, project)
 
 
-def process_and_generate_visualisations(file: dict):
+def process_and_generate_visualisations(file: str, project: str):
     processed = processor.read_file(file)
 
     visualisations_to_generate = remove_functions_without_logs(processed)
 
     for (key, value) in visualisations_to_generate.items():
-        kib.generate_visualisation(key, value)
+        kib.generate_visualisation(project, key, value)
 
 
 def remove_functions_without_logs(processed_file_content: dict) -> dict:

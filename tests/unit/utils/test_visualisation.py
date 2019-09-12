@@ -5,39 +5,48 @@ from pytest import mark, raises
 
 
 @mark.parametrize(
-    "key, vis_state, expected",
+    "project, key, vis_state, expected",
     [
-        ("", {}, "visualisation_with_empty_vis_state.json"),
-        ("Valid", {"some": "here"}, "visualisation_with_valid_values.json")
+        ("", "", {}, "visualisation_with_empty_vis_state.json"),
+        ("Secret", "Valid",
+         {"some": "here"}, "visualisation_with_valid_values.json")
     ]
 )
-def test_constructor(key, vis_state, expected):
+def test_constructor(project, key, vis_state, expected):
     assert get_test_results_json_file(expected) == \
-        Visualisation(key, vis_state).visualisation
-
-
-def test_set_title_value_error():
-    visualisation = Visualisation("Test", {})
-    with raises(ValueError):
-        visualisation.set_title(None)
+        Visualisation(project, key, vis_state).visualisation
 
 
 @mark.parametrize(
-    "title, expected",
+    "project, key",
     [
-        ("One", "[Generated] - One"),
-        ("fsdfasfd", "[Generated] - fsdfasfd")
+        (None, None),
+        ("one", None),
+        (None, "one")
     ]
 )
-def test_set_title(title, expected):
-    visualisation = Visualisation("Test", {})
-    assert visualisation.visualisation['title'] == "[Generated] - Test"
-    visualisation.set_title(title)
+def test_set_title_value_error(project, key):
+    visualisation = Visualisation("A", "Test", {})
+    with raises(ValueError):
+        visualisation.set_title(project, key)
+
+
+@mark.parametrize(
+    "project, title, expected",
+    [
+        ("Secret", "One", "[Generated] - Secret - One"),
+        ("fdsafd", "fsdfasfd", "[Generated] - fdsafd - fsdfasfd")
+    ]
+)
+def test_set_title(project, title, expected):
+    visualisation = Visualisation("A", "Test", {})
+    assert visualisation.visualisation['title'] == "[Generated] - A - Test"
+    visualisation.set_title(project, title)
     assert visualisation.visualisation['title'] == expected
 
 
 def test_set_vis_state_value_error():
-    visualisation = Visualisation("Test", {})
+    visualisation = Visualisation("A", "Test", {})
     with raises(ValueError):
         visualisation.set_vis_state(None)
 
@@ -50,22 +59,23 @@ def test_set_vis_state_value_error():
     ]
 )
 def test_set_vis_state(vis_state, expected):
-    visualisation = Visualisation("Test", {})
+    visualisation = Visualisation("A", "Test", {})
     assert visualisation.visualisation['visState'] == "{}"
     visualisation.set_vis_state(vis_state)
     assert visualisation.visualisation['visState'] == expected
 
 
 @mark.parametrize(
-    "key, vis_state, expected",
+    "project, key, vis_state, expected",
     [
-        ("", {}, "visualisation_with_empty_vis_state.json"),
-        ("Valid", {"some": "here"}, "visualisation_with_valid_values.json")
+        ("", "", {}, "visualisation_with_empty_vis_state.json"),
+        ("Secret", "Valid", {"some": "here"},
+         "visualisation_with_valid_values.json")
     ]
 )
-def test_get(key, vis_state, expected):
+def test_get(project, key, vis_state, expected):
     assert get_test_results_json_file(expected) == \
-        Visualisation(key, vis_state).get()
+        Visualisation(project, key, vis_state).get()
 
 
 def get_test_results_json_file(name: str) -> dict:

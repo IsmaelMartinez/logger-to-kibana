@@ -1,5 +1,5 @@
 {
-    "title": "[Generated] - Valid",
+    "title": "[Generated] - Secret - Valid",
     "visState": "{\"some\": \"here\"}",
     "kibanaSavedObjectMeta": {
         "searchSourceJSON": "{\"index\": \"90943e30-9a47-11e8-b64d-95841ca0b247\", \"query\": {\"query\": \"\", \"language\": \"lucene\"}, \"filter\": []}"

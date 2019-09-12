@@ -36,7 +36,7 @@ def test_process_and_generate_visualisations(read_file, remove_functions,
                                              generate_visualisation,
                                              vis_generated, calls_expected):
     remove_functions.return_value = vis_generated
-    commands.process_and_generate_visualisations("file")
+    commands.process_and_generate_visualisations("file", "A")
     assert read_file.call_count == 1
     assert remove_functions.call_count == 1
     assert generate_visualisation.call_count == calls_expected

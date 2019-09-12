@@ -10,7 +10,7 @@ class VisState:
     that follow the Kibana format
     """
 
-    def __init__(self, key: str, logs: []):
+    def __init__(self, project: str, key: str, logs: []):
         self.metricGroupFilter = {"input": {"query": ""}, "label": ""}
         self.visState = {
             "title": "",
@@ -54,17 +54,19 @@ class VisState:
             ],
         }
 
-        self.set_title(key)
+        self.set_title(project, key)
         self.set_logs(logs)
 
-    def set_title(self, key: str):
+    def set_title(self, project: str, key: str):
+        if not isinstance(project, str):
+            raise ValueError("project must be a string")
         if not isinstance(key, str):
             raise ValueError("key must be a string")
-        self.visState["title"] = "[Generated] - " + str(key)
+        self.visState["title"] = f"[Generated] - {project} - {key}"
 
     def set_logs(self, logs: []):
         for i in range(len(logs)):
-            self.add(logs[i]["message"])
+            self.add(logs[i]["filter"])
 
     def add(self, log_message: str):
         """
