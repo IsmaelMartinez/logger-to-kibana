@@ -1,9 +1,15 @@
 """
 This function handles the generation of the kibana visualisation
 """
+import configparser
 import json
 import requests
 from src.utils import visualisation, vis_state
+
+config = configparser.ConfigParser()
+config.read("settings.ini")
+
+baseUrl = config.get('kibana', 'BaseUrl')
 
 
 def generate_visualisation(project: str, key: str, values: dict):
@@ -16,7 +22,6 @@ def generate_visualisation(project: str, key: str, values: dict):
 
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": vis.get()}
-    baseUrl = "http://localhost:5601"
     url = (
         f"""{baseUrl}/api/saved_objects/visualization/"""
         f"""generated-{project}-{key}?overwrite=true"""

@@ -17,9 +17,6 @@ def commands():
 @click.option("--file", "-f",
               required=True, metavar="str", help="The file to read")
 def process(file: str):
-    """
-    Process the file and print the processed results
-    """
     process_file(file)
 
 
@@ -36,9 +33,6 @@ def process_file(file: str):
 @click.option("--project", "-p",
               required=True, metavar="str", help="Project name")
 def process_and_generate(file: str, project: str):
-    """
-    Process the file and generates the visualisation in kibana
-    """
     process_and_generate_visualisations(file, project)
 
 
@@ -52,9 +46,6 @@ def process_and_generate_visualisations(file: str, project: str):
 
 
 def remove_functions_without_logs(processed_file_content: dict) -> dict:
-    """
-    Removes the functions without logs from the processes_file_content
-    """
     return {
         key: value
         for (key, value) in processed_file_content.items()

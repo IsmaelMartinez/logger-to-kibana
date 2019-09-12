@@ -1,5 +1,5 @@
 """
-This module handles the Metric visualisation generation
+This module handles the Metric Visualisation generation
 """
 import copy
 
@@ -69,9 +69,6 @@ class VisState:
             self.add(logs[i]["filter"])
 
     def add(self, log_message: str):
-        """
-        Add a new metric object that will search for the log_message provided
-        """
         if not isinstance(log_message, str):
             raise ValueError("log_message must be a string")
         self.metricGroupFilter["input"]["query"] = log_message
@@ -80,7 +77,4 @@ class VisState:
         )
 
     def get(self):
-        """
-        Get the visState object.
-        """
         return self.visState
