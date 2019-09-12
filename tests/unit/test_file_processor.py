@@ -10,11 +10,11 @@ def test_read_file():
         "lambda_handler": {
             "function_name": "lambda_handler",
             "logs": [
-                {"type": "debug", "message": "Initialising"},
-                {"type": "info", "message": "Processing"},
-                {"type": "warn", "message": "Success"},
-                {"type": "error", "message": "Failure"},
-                {"type": "critical", "message": "Bananas"},
+                {"type": "debug", "filter": 'message: "Initialising"'},
+                {"type": "info", "filter": 'message: "Processing"'},
+                {"type": "warn", "filter": 'message: "Success"'},
+                {"type": "error", "filter": 'message: "Failure"'},
+                {"type": "critical", "filter": 'message: "Bananas"'},
             ],
         }
     }

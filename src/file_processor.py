@@ -84,7 +84,8 @@ def process_with_log_mapping(function_name: str, line: str):
         if re.findall(mapping["detector"], line):
             message = re.findall(mapping["filter"], line)
             if message:
-                RESULTS[function_name]["logs"].append(
-                    {"type": mapping["type"], "message": message[0]}
-                )
+                RESULTS[function_name]["logs"].append({
+                    "type": mapping["type"],
+                    "filter": 'message: "' + message[0] + '"'
+                })
                 return
