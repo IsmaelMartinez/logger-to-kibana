@@ -1,7 +1,13 @@
 """
-This module handles the Kibana VISUALISATION generation
+This module handles the Kibana Visualisation generation
 """
+import configparser
 import json
+
+config = configparser.ConfigParser()
+config.read("settings.ini")
+
+index = config.get('kibana', 'Index')
 
 
 class Visualisation:
@@ -14,7 +20,7 @@ class Visualisation:
         self.kibana_meta = {
             "searchSourceJSON": json.dumps(
                 {
-                    "index": "90943e30-9a47-11e8-b64d-95841ca0b247",
+                    "index": index,
                     "query": {"query": "", "language": "lucene"},
                     "filter": [],
                 }
@@ -25,9 +31,6 @@ class Visualisation:
         self.visualisation["kibanaSavedObjectMeta"] = self.kibana_meta
 
     def set_title(self, project: str, key: str):
-        """
-        Sets the visualisation title
-        """
         if not isinstance(project, str):
             raise ValueError("Project should be a string")
         if not isinstance(key, str):
@@ -35,15 +38,9 @@ class Visualisation:
         self.visualisation["title"] = "[Generated] - " + project + " - " + key
 
     def set_vis_state(self, vis_state: dict):
-        """
-        Sets the visualisation visState object
-        """
         if not isinstance(vis_state, dict):
             raise ValueError("vis_state should be a dict")
         self.visualisation["visState"] = json.dumps(vis_state)
 
     def get(self):
-        """
-        Returns the visualisation object
-        """
         return self.visualisation

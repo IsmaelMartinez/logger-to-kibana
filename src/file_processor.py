@@ -1,7 +1,7 @@
 """
 The file_processor is in charge of processing the files
-looking for the log_mappings
-to generate an object with the function, log_message and level
+looking for the log_mappings to generate an object with
+the function, log_message and level
 """
 
 import re

@@ -7,7 +7,6 @@ from unittest.mock import patch
 @pytest.mark.parametrize(
     "project, key, value, expected",
     [
-        # (None, None, None),
         ("A", "title", {"logs": []}, {})
     ]
 )
