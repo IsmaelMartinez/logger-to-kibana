@@ -126,3 +126,20 @@ Will return the next object:
 ```
 
 After this, it removes any functions without logs, and generates a kibana metric visualisation with the rest.
+
+## Configuration
+
+The [settings.ini](settings.ini) file allows the modification of:
+
+* file_parsers: To change the detectors and filters.
+* kibana: To set up your kibana url and index.
+
+## Kibana
+
+--section to explain how the Kibana part works.
+
+## Limitations
+
+Currently, this project only works with LOG objects in functions.
+
+It only generates the visualisations and not the dashboards.
