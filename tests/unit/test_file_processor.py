@@ -6,15 +6,15 @@ import src.file_processor as processor
 
 def test_read_file():
 
-    assert processor.read_file("example.py") == {
+    assert processor.read_file("tests/unit/resources/example.py") == {
         "lambda_handler": {
             "function_name": "lambda_handler",
             "logs": [
-                {"type": "debug", "message": "Initialising"},
-                {"type": "info", "message": "Processing"},
-                {"type": "warn", "message": "Success"},
-                {"type": "error", "message": "Failure"},
-                {"type": "critical", "message": "Bananas"},
+                {"type": "debug", "filter": 'message: "Initialising"'},
+                {"type": "info", "filter": 'message: "Processing"'},
+                {"type": "warn", "filter": 'message: "Success"'},
+                {"type": "error", "filter": 'message: "Failure"'},
+                {"type": "critical", "filter": 'message: "Bananas"'},
             ],
         }
     }

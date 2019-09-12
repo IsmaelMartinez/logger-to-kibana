@@ -2,7 +2,6 @@
 
 [![Build Status](https://dev.azure.com/ismaelmartinez0550/logger_to_kibana/_apis/build/status/IsmaelMartinez.logger_to_kibana?branchName=master)](https://dev.azure.com/ismaelmartinez0550/logger_to_kibana/_build/latest?definitionId=2&branchName=master)
 [![DepShield Badge](https://depshield.sonatype.org/badges/IsmaelMartinez/logger_to_kibana/depshield.svg)](https://depshield.github.io)
-## This project is currently in early development stage. Use it at your own risk
 
 ---
 
@@ -75,7 +74,7 @@ For each function, it will generate an object like the following:
     'function_name': '<function_filter>',
     'logs': [{
         'type': '<type>',
-        'message': '<filter_message>'
+        'filter': 'message: "<filter_message>"'
     },{
         ...
     }]
@@ -85,23 +84,12 @@ For each function, it will generate an object like the following:
 As an example, when processing the following file:
 
 ```python
-def lambda_handler(event: dict, context):
-    """
-    Handles a lambda event and does some stuff with it
-    :param context: Unused lambda execution context.
-    :return:
-    """
-    ...
+def lambda_handler(_event: dict, _context):
     LOG.debug('Initialising')
-    ...
     LOG.info('Processing')
-    ...
     LOG.warn('Success')
-    ...
     LOG.error('Failure')
-    ...
     LOG.critical('Bananas')
-    ...
 )
 ```
 
@@ -114,23 +102,23 @@ Will return the next object:
         'logs': [
             {
                 'type': 'debug',
-                'message': 'Initialising'
+                'filter' : 'message: "Initialising"'
             },
             {
                 'type': 'info',
-                'message': 'Processing'
+                'filter' : 'message: "Processing"'
             },
             {
                 'type': 'warn',
-                'message': 'Success'
+                'filter' : 'message: "Success"'
             },
             {
                 'type': 'error',
-                'message': 'Failure'
+                'filter' : 'message: "Failure"'
             },
             {
                 'type': 'critical',
-                'message': 'Bananas'
+                'filter' : 'message: "Bananas"'
             }
         ]
     }

@@ -6,19 +6,21 @@ import requests
 from src.utils import visualisation, vis_state
 
 
-def generate_visualisation(key: str, values: dict):
+def generate_visualisation(project: str, key: str, values: dict):
     """
     Generates the visualisation using the key and values provided
     """
-    state = vis_state.VisState(key, values["logs"])
+    state = vis_state.VisState(project, key, values["logs"])
 
-    vis = visualisation.Visualisation(key, state.get())
+    vis = visualisation.Visualisation(project, key, state.get())
 
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": vis.get()}
     baseUrl = "http://localhost:5601"
-    url = f"{baseUrl}/api/saved_objects/visualization/generated-{key}\
-        ?overwrite=true"
+    url = (
+        f"""{baseUrl}/api/saved_objects/visualization/"""
+        f"""generated-{project}-{key}?overwrite=true"""
+    )
 
     response = requests.post(
         url,

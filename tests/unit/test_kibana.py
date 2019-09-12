@@ -5,11 +5,11 @@ from unittest.mock import patch
 
 @patch.object(kib, "requests")
 @pytest.mark.parametrize(
-    "key, value, expected",
+    "project, key, value, expected",
     [
         # (None, None, None),
-        ("title", {"logs": []}, {})
+        ("A", "title", {"logs": []}, {})
     ]
 )
-def test_generate_visualisation(requests, key, value, expected):
-    expected == kib.generate_visualisation(key, value)
+def test_generate_visualisation(requests, project, key, value, expected):
+    expected == kib.generate_visualisation(project, key, value)

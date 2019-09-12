@@ -9,49 +9,59 @@ from src.utils.vis_state import VisState
 
 
 @mark.parametrize(
-    "key, logs, expected",
+    "project, key, logs, expected",
     [
-        ("Tost", [], "[Generated] - Tost"),
-        ("Test", [],  "[Generated] - Test")
+        ("Project", "Tost", [], "[Generated] - Project - Tost"),
+        ("Project", "Test", [], "[Generated] - Project - Test")
     ]
 )
-def test_contructor(key, logs, expected):
-    assert expected == VisState(key, logs).visState["title"]
+def test_contructor(project, key, logs, expected):
+    assert expected == VisState(project, key, logs).visState["title"]
 
 
 @mark.parametrize(
-    "key,expected",
+    "project, key, expected",
     [
-        ("Tost", "[Generated] - Tost"),
-        ("Test", "[Generated] - Test")
+        ("A", "Tost", "[Generated] - A - Tost"),
+        ("Secret", "Test", "[Generated] - Secret - Test")
     ]
 )
-def test_set_title(key, expected):
-    vis_state = VisState(key, [])
+def test_set_title(project, key, expected):
+    vis_state = VisState(project, key, [])
     assert expected == vis_state.visState["title"]
 
 
-def test_set_title_value_error():
+@mark.parametrize(
+    "project, key",
+    [
+        (None, "Tost"),
+        ("Secret", None),
+        (None, None)
+    ]
+)
+def test_set_title_value_error(project, key):
     with raises(ValueError):
-        VisState(None, [])
+        VisState(project, key, [])
 
 
 @patch.object(VisState, "add")
 @mark.parametrize(
     "logs, expected",
     [
-        ([{'message': 'Test'}], 1),
-        ([{'message': 'Test'}, {'message': 'Test2'}, {'message': 'Test3'}], 3)
+        ([{'filter': 'message: "Test"'}], 1),
+        ([{'filter': 'message: "Test"'},
+          {'filter': 'message: "Test2"'},
+          {'filter': 'message: "Test3"'}], 3)
     ]
 )
 def test_set_logs(add, logs, expected):
-    vis_state = VisState("Test", [])
+    vis_state = VisState("A", "Test", [])
     vis_state.set_logs(logs)
     assert add.call_count == expected
 
 
 def test_add_value_error():
-    vis = VisState("Valid", [])
+    vis = VisState("A", "Valid", [])
     with raises(ValueError):
         vis.add(None)
 
@@ -64,7 +74,7 @@ def test_add_value_error():
     ],
 )
 def test_get(key, expected):
-    assert get_test_results_json_file(expected) == VisState(key, []).get()
+    assert get_test_results_json_file(expected) == VisState("", key, []).get()
 
 
 @mark.parametrize(
@@ -75,7 +85,7 @@ def test_get(key, expected):
     ],
 )
 def test_add_one(key, expected):
-    vis = VisState("Valid", [])
+    vis = VisState("", "Valid", [])
     for value in key:
         vis.add(value)
     assert get_test_results_json_file(expected) == vis.get()

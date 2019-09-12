@@ -5,36 +5,53 @@ to generate an object with the function, log_message and level
 """
 
 import re
+import configparser
+
+config = configparser.ConfigParser()
+config.read("settings.ini")
+
+function_detector = config.get('file_parsers', 'FunctionMappingDetector')
+function_filter = config.get('file_parsers', 'FunctionMappingFilter')
+log_debug_detector = config.get('file_parsers', 'LogDebugDetector')
+log_debug_filter = config.get('file_parsers', 'LogDebugFilter')
+log_info_detector = config.get('file_parsers', 'LogInfoDetector')
+log_info_filter = config.get('file_parsers', 'LogInfoFilter')
+log_warn_detector = config.get('file_parsers', 'LogWarnDetector')
+log_warn_filter = config.get('file_parsers', 'LogWarnFilter')
+log_error_detector = config.get('file_parsers', 'LogErrorDetector')
+log_error_filter = config.get('file_parsers', 'LogErrorFilter')
+log_critical_detector = config.get('file_parsers', 'LogCriticalDetector')
+log_critical_filter = config.get('file_parsers', 'LogCriticalFilter')
 
 RESULTS = {}
 
-FUNCTION_MAPPING = {"detector": r"def", "filter": r"(?<=def ).*?(?=\()"}
+FUNCTION_MAPPING = {"detector": function_detector, "filter": function_filter}
 
 LOG_MAPPING = [
     {
         "type": "debug",
-        "detector": r"LOG.debug",
-        "filter": r'(?<=LOG.debug\(["\']).*?(?=["\'])',
+        "detector": log_debug_detector,
+        "filter": log_debug_filter,
     },
     {
         "type": "info",
-        "detector": r"LOG.info",
-        "filter": r'(?<=LOG.info\(["\']).*?(?=["\'])',
+        "detector": log_info_detector,
+        "filter": log_info_filter,
     },
     {
         "type": "warn",
-        "detector": r"LOG.warn",
-        "filter": r'(?<=LOG.warn\(["\']).*?(?=["\'])',
+        "detector": log_warn_detector,
+        "filter": log_warn_filter,
     },
     {
         "type": "error",
-        "detector": r"LOG.error",
-        "filter": r'(?<=LOG.error\(["\']).*?(?=["\'])',
+        "detector": log_error_detector,
+        "filter": log_error_filter,
     },
     {
         "type": "critical",
-        "detector": r"LOG.critical",
-        "filter": r'(?<=LOG.critical\(["\']).*?(?=["\'])',
+        "detector": log_critical_detector,
+        "filter": log_critical_filter,
     },
 ]
 
@@ -67,7 +84,8 @@ def process_with_log_mapping(function_name: str, line: str):
         if re.findall(mapping["detector"], line):
             message = re.findall(mapping["filter"], line)
             if message:
-                RESULTS[function_name]["logs"].append(
-                    {"type": mapping["type"], "message": message[0]}
-                )
+                RESULTS[function_name]["logs"].append({
+                    "type": mapping["type"],
+                    "filter": 'message: "' + message[0] + '"'
+                })
                 return
