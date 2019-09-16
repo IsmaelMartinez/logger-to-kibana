@@ -20,8 +20,8 @@ def generate_and_send_visualisation(path_name: str, items: []):
 
 def generate_folder_visualisation(path_name: str, items: []) -> dict:
     folder_name = Path(path_name).parts[-1]
-    metric = table.generate_metric_vis_state(folder_name, items)
-    return visualisation.generate_visualisation(folder_name, metric)
+    vis_state = table.generate_table_vis_state(folder_name, items)
+    return visualisation.generate_visualisation(folder_name, vis_state)
 
 
 def send_visualisation(path_name: str, visualisation: dict):

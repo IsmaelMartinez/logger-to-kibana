@@ -34,7 +34,7 @@ vis_state = {
 }
 
 
-def generate_metric_vis_state(path_name, logs) -> dict:
+def generate_table_vis_state(path_name, logs) -> dict:
     set_title(path_name)
     set_logs(logs)
     return vis_state
@@ -47,9 +47,11 @@ def set_title(path_name: str):
 
 
 def set_logs(logs: []):
-    for log in logs:
-        group_filter["input"]["query"] = log["query"]
-        group_filter["label"] = log["label"]
-        vis_state["aggs"][1]["params"]["filters"].append(
-            copy.deepcopy(group_filter)
-        )
+    vis_state["aggs"][1]["params"]["filters"] = []
+    if logs:
+        for log in logs:
+            group_filter["input"]["query"] = log["query"]
+            group_filter["label"] = log["label"]
+            vis_state["aggs"][1]["params"]["filters"].append(
+                copy.deepcopy(group_filter)
+            )

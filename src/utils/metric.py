@@ -61,7 +61,7 @@ def set_logs(logs: []):
     if logs:
         for log in logs:
             metric_group_filter["input"]["query"] = log["query"]
-            metric_group_filter["input"]["label"] = log["label"]
+            metric_group_filter["label"] = log["label"]
             vis_state["aggs"][1]["params"]["filters"].append(
                 copy.deepcopy(metric_group_filter)
             )

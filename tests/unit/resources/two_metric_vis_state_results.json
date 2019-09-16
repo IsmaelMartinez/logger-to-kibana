@@ -46,10 +46,14 @@
                 "filters": [
                     {
                         "input": {
-                            "query": "one",
-                            "label": "one"
+                            "query": "One"
                         },
-                        "label": ""
+                        "label": "One"
+                    },{
+                        "input": {
+                            "query": "Two"
+                        },
+                        "label": "Two"
                     }
                 ]
             }
