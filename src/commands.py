@@ -13,41 +13,24 @@ def commands():
     """
 
 
-@commands.command("process", short_help="Process the file returning a JSON")
-@click.option("--file", "-f",
-              required=True, metavar="str", help="The file to read")
-def process(file: str):
-    process_file(file)
-
-
-def process_file(file: str):
-    print(processor.read_file(file))
+@commands.command(
+        "process_folder", short_help="Process the folder printing a JSON")
+@click.option("--folder", "-f",
+              required=False, metavar="str", help="Folder to read")
+def process_folder(folder: str):
+    print(processor.process_folder(folder))
 
 
 @commands.command(
     "process_and_generate",
-    short_help="Process the file and generate visualisation"
+    short_help="Process the folder and generate visualisation"
 )
-@click.option("--file", "-f",
-              required=True, metavar="str", help="The file to read")
-@click.option("--project", "-p",
-              required=True, metavar="str", help="Project name")
-def process_and_generate(file: str, project: str):
-    process_and_generate_visualisations(file, project)
+@click.option("--folder", "-f",
+              required=False, metavar="str", help="Folder to read")
+def process_and_generate(folder: str):
+    process_and_generate_visualisations(folder)
 
 
-def process_and_generate_visualisations(file: str, project: str):
-    processed = processor.read_file(file)
-
-    visualisations_to_generate = remove_functions_without_logs(processed)
-
-    for (key, value) in visualisations_to_generate.items():
-        kib.generate_visualisation(project, key, value)
-
-
-def remove_functions_without_logs(processed_file_content: dict) -> dict:
-    return {
-        key: value
-        for (key, value) in processed_file_content.items()
-        if processed_file_content[key]["logs"]
-    }
+def process_and_generate_visualisations(folder: str):
+    processed = processor.process_folder(folder)
+    kib.generate_and_send_visualisation(folder, processed)
