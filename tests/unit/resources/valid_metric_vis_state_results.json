@@ -1,5 +1,5 @@
 {
-    "title": "[Generated] -  - Valid",
+    "title": "[Generated] - Valid",
     "type": "metric",
     "params": {
         "addTooltip": true,
@@ -48,7 +48,12 @@
                         "input": {
                             "query": "One"
                         },
-                        "label": ""
+                        "label": "One"
+                    },{
+                        "input": {
+                            "query": "Two"
+                        },
+                        "label": "Two"
                     }
                 ]
             }

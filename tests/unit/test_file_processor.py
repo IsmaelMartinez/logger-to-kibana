@@ -1,20 +1,49 @@
-"""
-Tests for file_processor.py
-"""
 import src.file_processor as processor
+from pytest import mark
+from unittest.mock import patch
 
 
-def test_read_file():
+@patch.object(processor.glob, "iglob")
+@patch.object(processor, "read_file_for_logs")
+@mark.parametrize(
+    'folder, returned_files, read_file_count',
+    [
+        (None, [], 0),
+        ("valid", [1, 2], 2),
+        ("invalid", [], 0)
+    ]
+)
+def test_process_folder(
+        read_file_for_logs, iglob, folder, returned_files, read_file_count):
+    iglob.return_value = returned_files
+    processor.process_folder(folder)
+    assert read_file_for_logs.call_count == read_file_count
 
-    assert processor.read_file("tests/unit/resources/example.py") == {
-        "lambda_handler": {
-            "function_name": "lambda_handler",
-            "logs": [
-                {"type": "debug", "filter": 'message: "Initialising"'},
-                {"type": "info", "filter": 'message: "Processing"'},
-                {"type": "warn", "filter": 'message: "Success"'},
-                {"type": "error", "filter": 'message: "Failure"'},
-                {"type": "critical", "filter": 'message: "Bananas"'},
-            ],
-        }
-    }
+
+@mark.parametrize(
+    "file, expected",
+    [
+        ("setup.py", []),
+        ("tests/unit/resources/example.py",
+         [
+            {"type": "debug",
+             "query": 'message: "Initialising"',
+             "label": "debug: Initialising"},
+            {"type": "info",
+             "query": 'message: "Processing"',
+             "label": "info: Processing"},
+            {"type": "warn",
+             "query": 'message: "Success"',
+             "label": "warn: Success"},
+            {"type": "error",
+             "query": 'message: "Failure"',
+             "label": "error: Failure"},
+            {"type": "critical",
+             "query": 'message: "Bananas"',
+             "label": "critical: Bananas"},
+         ])
+    ]
+)
+def test_read_file_for_logs(file, expected):
+    processor.read_file_for_logs(file)
+    assert processor.FILE_RESULTS == expected

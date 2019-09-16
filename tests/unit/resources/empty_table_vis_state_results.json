@@ -1,0 +1,33 @@
+{
+    "title": "[Generated] - ",
+    "type": "table",
+    "params": {
+        "perPage": 10,
+        "showPartialRows": false,
+        "showMetricsAtAllLevels": false,
+        "sort": {
+            "columnIndex": null,
+            "direction": null
+        },
+        "showTotal": false,
+        "totalFunc": "sum"
+    },
+    "aggs": [
+        {
+            "id": "1",
+            "enabled": true,
+            "type": "count",
+            "schema": "metric",
+            "params": {}
+        },
+        {
+            "id": "2",
+            "enabled": true,
+            "type": "filters",
+            "schema": "bucket",
+            "params": {
+                "filters": []
+            }
+        }
+    ]
+}

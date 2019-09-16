@@ -6,12 +6,12 @@ the function, log_message and level
 
 import re
 import configparser
+import glob
 
 config = configparser.ConfigParser()
 config.read("settings.ini")
 
-function_detector = config.get('file_parsers', 'FunctionMappingDetector')
-function_filter = config.get('file_parsers', 'FunctionMappingFilter')
+files_match = config.get('file_parsers', 'FilesMatchFilter')
 log_debug_detector = config.get('file_parsers', 'LogDebugDetector')
 log_debug_filter = config.get('file_parsers', 'LogDebugFilter')
 log_info_detector = config.get('file_parsers', 'LogInfoDetector')
@@ -23,9 +23,7 @@ log_error_filter = config.get('file_parsers', 'LogErrorFilter')
 log_critical_detector = config.get('file_parsers', 'LogCriticalDetector')
 log_critical_filter = config.get('file_parsers', 'LogCriticalFilter')
 
-RESULTS = {}
-
-FUNCTION_MAPPING = {"detector": function_detector, "filter": function_filter}
+FILE_RESULTS = []
 
 LOG_MAPPING = [
     {
@@ -56,36 +54,28 @@ LOG_MAPPING = [
 ]
 
 
-def read_file(filename: str) -> dict:
-    """
-    Reads the file line by line looking for the FUNCTION_MAPPING detector.
-    if no FUNCTION_MAPPING detector is found it calls process_with_log_mapping.
-    """
-    with open(filename) as file:
-        function_name = None
-        for line in file:
-            if re.findall(FUNCTION_MAPPING["detector"], line):
-                function_name = re.findall(FUNCTION_MAPPING["filter"], line)[0]
-                RESULTS[function_name] = {
-                    "function_name": function_name,
-                    "logs": []
-                }
-            else:
-                process_with_log_mapping(function_name, line)
-    return RESULTS
+def process_folder(folder: str) -> []:
+    if not folder:
+        folder = ""
+    for file in glob.iglob(folder + files_match, recursive=True):
+        read_file_for_logs(file)
+    return FILE_RESULTS
 
 
-def process_with_log_mapping(function_name: str, line: str):
-    """
-    Process the line for each of the LOG_MAPPING detectors
-    adding a RESULTS of the function_name if found.
-    """
+def read_file_for_logs(filename: str):
+    with open(filename) as f:
+        for line in f:
+            process_line_log_mapping(line)
+
+
+def process_line_log_mapping(line: str):
     for mapping in LOG_MAPPING:
         if re.findall(mapping["detector"], line):
             message = re.findall(mapping["filter"], line)
             if message:
-                RESULTS[function_name]["logs"].append({
+                FILE_RESULTS.append({
                     "type": mapping["type"],
-                    "filter": 'message: "' + message[0] + '"'
+                    "query": 'message: "' + message[0] + '"',
+                    "label": mapping["type"] + ": " + message[0]
                 })
                 return
