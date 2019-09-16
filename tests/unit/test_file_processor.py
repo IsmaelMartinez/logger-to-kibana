@@ -1,6 +1,3 @@
-"""
-Tests for file_processor.py
-"""
 import src.file_processor as processor
 from pytest import mark
 from unittest.mock import patch

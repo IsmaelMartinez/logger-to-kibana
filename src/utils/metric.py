@@ -57,9 +57,11 @@ def set_title(path_name: str):
 
 
 def set_logs(logs: []):
-    for log in logs:
-        metric_group_filter["input"]["query"] = log["query"]
-        metric_group_filter["input"]["label"] = log["label"]
-        vis_state["aggs"][1]["params"]["filters"].append(
-            copy.deepcopy(metric_group_filter)
-        )
+    vis_state["aggs"][1]["params"]["filters"] = []
+    if logs:
+        for log in logs:
+            metric_group_filter["input"]["query"] = log["query"]
+            metric_group_filter["input"]["label"] = log["label"]
+            vis_state["aggs"][1]["params"]["filters"].append(
+                copy.deepcopy(metric_group_filter)
+            )

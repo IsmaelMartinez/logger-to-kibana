@@ -14,18 +14,18 @@ baseUrl = config.get('kibana', 'BaseUrl')
 
 
 def generate_and_send_visualisation(path_name: str, items: []):
+    vis = generate_folder_visualisation(path_name, items)
+    send_visualisation(path_name, vis)
+
+
+def generate_folder_visualisation(path_name: str, items: []) -> dict:
     folder_name = Path(path_name).parts[-1]
-    vis = generate_folder_visualisation(folder_name, items)
-    send_visualisation(folder_name, vis)
-
-
-def generate_folder_visualisation(folder_name: str, items: []) -> dict:
     metric = table.generate_metric_vis_state(folder_name, items)
     return visualisation.generate_visualisation(folder_name, metric)
 
 
-def send_visualisation(folder_name: str, visualisation: dict):
-    # import pdb; pdb.set_trace()
+def send_visualisation(path_name: str, visualisation: dict):
+    folder_name = Path(path_name).parts[-1]
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": visualisation}
     url = (

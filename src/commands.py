@@ -14,10 +14,10 @@ def commands():
 
 
 @commands.command(
-        "process_folder", short_help="Process the folder printing a JSON")
+        "process", short_help="Process the folder")
 @click.option("--folder", "-f",
               required=False, metavar="str", help="Folder to read")
-def process_folder(folder: str):
+def process(folder: str):
     print(processor.process_folder(folder))
 
 
@@ -31,6 +31,21 @@ def process_and_generate(folder: str):
     process_and_generate_visualisations(folder)
 
 
+@commands.command(
+    "process_generate_and_send",
+    short_help="Process the folder, generate visualisation and send"
+)
+@click.option("--folder", "-f",
+              required=False, metavar="str", help="Folder to read")
+def process_generate_and_send(folder: str):
+    process_generate_and_send_visualisations(folder)
+
+
 def process_and_generate_visualisations(folder: str):
+    processed = processor.process_folder(folder)
+    print(kib.generate_folder_visualisation(folder, processed))
+
+
+def process_generate_and_send_visualisations(folder: str):
     processed = processor.process_folder(folder)
     kib.generate_and_send_visualisation(folder, processed)
