@@ -16,7 +16,8 @@ def test_generate_table_vis_state_integration():
     query = [{"query": "One", "label": "One"},
              {"query": "Two", "label": "Two"}]
     assert table.generate_table_vis_state("Valid", query) == \
-        helpers.get_test_results_json_file("valid_table_vis_state_results.json")
+        helpers.get_test_results_json_file(
+            "valid_table_vis_state_results.json")
 
 
 def test_set_title_value_error():

@@ -9,7 +9,7 @@ from tests import helpers
     "path_name, vis_state, expected",
     [
         ("Valid", "{\"title\": \"[Generated] - Valid\", \"type\": \"table\", \
-         \"params\": {\"perPage\": 10, \"showPartialRows\": false, \
+         \"params\": {\"perPage\": 20, \"showPartialRows\": false, \
          \"showMetricsAtAllLevels\": false, \"sort\": {\"columnIndex\": null, \
          \"direction\": null}, \"showTotal\": false, \"totalFunc\": \"sum\"}, \
          \"aggs\": [{\"id\": \"1\", \"enabled\": true, \"type\": \"count\", \
@@ -19,7 +19,7 @@ from tests import helpers
          "visualisation_with_valid_values.json"),
         ("/",
          "{\"title\": \"[Generated] - /\", \"type\": \"table\", \"params\": \
-          {\"perPage\": 10, \"showPartialRows\": false, \
+          {\"perPage\": 20, \"showPartialRows\": false, \
           \"showMetricsAtAllLevels\": false, \"sort\": {\"columnIndex\": null,\
           \"direction\": null}, \"showTotal\": false, \"totalFunc\": \"sum\"},\
           \"aggs\": [{\"id\": \"1\", \"enabled\": true, \"type\": \"count\", \

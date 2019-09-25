@@ -5,7 +5,7 @@ vis_state = {
     "title": "",
     "type": "table",
     "params": {
-        "perPage": 10,
+        "perPage": 20,
         "showPartialRows": False,
         "showMetricsAtAllLevels": False,
         "sort": {
