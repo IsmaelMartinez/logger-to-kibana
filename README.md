@@ -13,7 +13,6 @@ To get the programs help just type:
 python main.py
 ```
 
-# from here it is out of date. see #23
 This returns:
 
 ```bash
