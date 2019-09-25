@@ -2,7 +2,7 @@
     "title": "[Generated] - ",
     "type": "table",
     "params": {
-        "perPage": 10,
+        "perPage": 20,
         "showPartialRows": false,
         "showMetricsAtAllLevels": false,
         "sort": {

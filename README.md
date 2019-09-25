@@ -24,61 +24,85 @@ Options:
   --help  Show this message and exit.
 
 Commands:
-  process               Process the file returning a JSON
-  process_and_generate  Process the file and generate visualisation
+  pommands:
+  process                    Process the folder
+  process_and_generate       Process the folder and generate visualisation
+  process_generate_and_send  Process the folder, generate visualisation and
+                             send
 ```
 
 The current available commands are:
 
 ## process
 
-Process a file and prints out the processed functions/logs
+Process a folder and prints out the processed functions/logs in the following format:
+
+```bash
+[{'type': '<log_type>', 'query': 'message: "<log_filter>"', 'label': '<log_type>: <log_filter>'}]
+```
 
 To execute the command run:
 
 ```bash
-python main.py process -f <file_location>.py
+python main.py process -f <folder_location>
 ```
+
+Check the table under [How does it work] section to get more info about log_type and log_filter.
 
 ## process_and_generate
 
-Process a file and generates a metric visualisation in kibana (currently in localhost:5601)
+Process a folder (as shown in the process section) and generates a table visualisation for kibana.
 
 To execute the command run:
 
 ```bash
-python main.py process_and_generate -f <file_location>.py -p <project_name>
+python main.py process_and_generate -f <folder_location>
+```
+
+## process_generate_and_send
+
+Process a folder, generates a table visualisation for kibana and send it to kibana (currently in localhost:5601)
+
+To execute the command run:
+
+```bash
+python main.py process_and_generate -f <folder_location>
 ```
 
 ## How does it work
 
-Currently this program uses regex `detector` to categorise the different lines.
+This program uses different regex `detectors` to filter logs and files to process.
 
-Then, it usses the `filter` to select what part of the line to keep.
+Those can be changed in the [settings.ini](settings.ini) file.
 
-It does this in the following order:
+The current available detectors are:
 
-| type | detector | filter |
+| Detector | Default Value | Propose |
 |---|---|---|
-| function | `r'def'` | `r'(?<=def ).*?(?=\()'` |
-| critical | `r'LOG.critical'` | `r'(?<=LOG.critical\(["\']).*?(?=["\'])'` |
-| error | `r'LOG.error'` | `r'(?<=LOG.error\(["\']).*?(?=["\'])'` |
-| warn | `r'LOG.warn'` | `r'(?<=LOG.warn\(["\']).*?(?=["\'])'` |
-| info | `r'LOG.info'` | `r'(?<=LOG.info\(["\']).*?(?=["\'])'` |
-| debug | `r'LOG.debug'` | `r'(?<=LOG.debug\(["\']).*?(?=["\'])'` |
+| FilesMatchFilter | app/src/**/*.py | Filter the files to process in the provided folder |
+| LogDebugDetector | LOG.debug | Detect the log debug message |
+| LogDebugFilter | (?<=LOG.debug\(["\']).*?(?=["\']) | Filter the log debug message |
+| LogInfoDetector | LOG.info | Detect the log info message |
+| LogInfoFilter | (?<=LOG.info\(["\']).*?(?=["\']) | Filter the log info message |
+| LogWarnDetector | LOG.warn | Detect the log warn message |
+| LogWarnFilter | (?<=LOG.warn\(["\']).*?(?=["\']) | Filter the log warn message |
+| LogErrorDetector | LOG.error | Detect the log error message |
+| LogErrorFilter | (?<=LOG.error\(["\']).*?(?=["\']) | Filter the log error message |
+| LogCriticalDetector | LOG.critical | Detect the log critical message |
+| LogCriticalFilter | (?<=LOG.critical\(["\']).*?(?=["\']) | Filter the log critical message |
 
-For each function, it will generate an object like the following:
+Other configuration available in the settings.ini file are:
+| Type | Value | Propose |
+| -- | -- | -- |
+| BaseUrl | [http://localhost:5601](http://localhost:5601) | Kibana base url |
+| Index | 90943e30-9a47-11e8-b64d-95841ca0b247 | Kibana index |
 
-```python
-{ '<function_filter>': {
-    'function_name': '<function_filter>',
-    'logs': [{
-        'type': '<type>',
-        'filter': 'message: "<filter_message>"'
-    },{
-        ...
-    }]
-}}
+## The process
+
+The commands for the application are done in the following logical order.
+
+```bash
+    process -> generate -> send
 ```
 
 As an example, when processing the following file:
@@ -96,50 +120,21 @@ def lambda_handler(_event: dict, _context):
 Will return the next object:
 
 ```python
-{
-    'lambda_handler': {
-        'function_name': 'lambda_handler',
-        'logs': [
-            {
-                'type': 'debug',
-                'filter' : 'message: "Initialising"'
-            },
-            {
-                'type': 'info',
-                'filter' : 'message: "Processing"'
-            },
-            {
-                'type': 'warn',
-                'filter' : 'message: "Success"'
-            },
-            {
-                'type': 'error',
-                'filter' : 'message: "Failure"'
-            },
-            {
-                'type': 'critical',
-                'filter' : 'message: "Bananas"'
-            }
-        ]
-    }
-}
+[{'type': 'debug', 'query': 'message: "Initialising"', 'label': 'debug: Initialising'}]
+[{'type': 'info', 'query': 'message: "Processing"', 'label': 'info: Processing'}]
+[{'type': 'warn', 'query': 'message: "Success"', 'label': 'warn: Success'}]
+[{'type': 'error', 'query': 'message: "Failure"', 'label': 'error: Failure'}]
+[{'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'}]
 ```
 
-After this, it removes any functions without logs, and generates a kibana metric visualisation with the rest.
+Generate, will generate a table visualisation with filters for all the logs that have found.
 
-## Configuration
+The choise of having a table visualisation is for the amount of information available. It is, basically, a good place to start as later we can split the visualisations by file, function or whatever we choose to do so.
 
-The [settings.ini](settings.ini) file allows the modification of:
-
-* file_parsers: To change the detectors and filters.
-* kibana: To set up your kibana url and index.
-
-## Kibana
-
---section to explain how the Kibana part works.
+To finish, it sends the generated visualisation to Kibana with the following name format:
 
 ## Limitations
 
-Currently, this project only works with LOG objects in functions.
+Currently, this project does not separate logs per file or function. For that reason, it was choosen to use the table visualisation as it is easy to generate too many filter for the other types of visualisations.
 
 It only generates the visualisations and not the dashboards.
