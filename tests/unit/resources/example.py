@@ -9,3 +9,4 @@ def lambda_handler(_event: dict, _context):
     LOG.warn('Success')
     LOG.error('Failure')
     LOG.critical('Bananas')
+    LOG.exception('Exception')

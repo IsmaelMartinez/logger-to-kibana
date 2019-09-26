@@ -41,6 +41,9 @@ def test_process_folder(
             {"type": "critical",
              "query": 'message: "Bananas"',
              "label": "critical: Bananas"},
+            {"type": "exception",
+             "query": 'message: "Exception"',
+             "label": "exception: Exception"},
          ])
     ]
 )

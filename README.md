@@ -90,6 +90,8 @@ The current available detectors are:
 | LogErrorFilter | (?<=LOG.error\(["\']).*?(?=["\']) | Filter the log error message |
 | LogCriticalDetector | LOG.critical | Detect the log critical message |
 | LogCriticalFilter | (?<=LOG.critical\(["\']).*?(?=["\']) | Filter the log critical message |
+| LogExceptionDetector | LOG.exception | Detect the log exception message |
+| LogExceptionFilter | (?<=LOG.exception\(["\']).*?(?=["\']) | Filter the log exception message |
 
 Other configuration available in the settings.ini file are:
 | Type | Value | Propose |
@@ -114,6 +116,7 @@ def lambda_handler(_event: dict, _context):
     LOG.warn('Success')
     LOG.error('Failure')
     LOG.critical('Bananas')
+    LOG.exception('Exception')
 )
 ```
 
@@ -124,7 +127,8 @@ Will return the next object:
 {'type': 'info', 'query': 'message: "Processing"', 'label': 'info: Processing'},
 {'type': 'warn', 'query': 'message: "Success"', 'label': 'warn: Success'},
 {'type': 'error', 'query': 'message: "Failure"', 'label': 'error: Failure'},
-{'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'}]
+{'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'},
+{"type": "exception", "query": 'message: "Exception"', "label": "exception: Exception"}]
 ```
 
 Generate, will generate a table visualisation with filters for all the logs that have found.

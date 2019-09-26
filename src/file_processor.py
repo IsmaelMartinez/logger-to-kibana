@@ -22,6 +22,8 @@ log_error_detector = config.get('file_parsers', 'LogErrorDetector')
 log_error_filter = config.get('file_parsers', 'LogErrorFilter')
 log_critical_detector = config.get('file_parsers', 'LogCriticalDetector')
 log_critical_filter = config.get('file_parsers', 'LogCriticalFilter')
+log_exception_detector = config.get('file_parsers', 'LogExceptionDetector')
+log_exception_filter = config.get('file_parsers', 'LogExceptionFilter')
 
 FILE_RESULTS = []
 
@@ -50,6 +52,11 @@ LOG_MAPPING = [
         "type": "critical",
         "detector": log_critical_detector,
         "filter": log_critical_filter,
+    },
+    {
+        "type": "exception",
+        "detector": log_exception_detector,
+        "filter": log_exception_filter,
     },
 ]
 
