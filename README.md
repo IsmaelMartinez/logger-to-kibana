@@ -120,11 +120,11 @@ def lambda_handler(_event: dict, _context):
 Will return the next object:
 
 ```python
-[{'type': 'debug', 'query': 'message: "Initialising"', 'label': 'debug: Initialising'}]
-[{'type': 'info', 'query': 'message: "Processing"', 'label': 'info: Processing'}]
-[{'type': 'warn', 'query': 'message: "Success"', 'label': 'warn: Success'}]
-[{'type': 'error', 'query': 'message: "Failure"', 'label': 'error: Failure'}]
-[{'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'}]
+[{'type': 'debug', 'query': 'message: "Initialising"', 'label': 'debug: Initialising'},
+{'type': 'info', 'query': 'message: "Processing"', 'label': 'info: Processing'},
+{'type': 'warn', 'query': 'message: "Success"', 'label': 'warn: Success'},
+{'type': 'error', 'query': 'message: "Failure"', 'label': 'error: Failure'},
+{'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'}]
 ```
 
 Generate, will generate a table visualisation with filters for all the logs that have found.
