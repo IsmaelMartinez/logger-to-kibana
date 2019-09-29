@@ -31,18 +31,50 @@ steps:
   displayName: 'Run Lint Tests'
 
 - script: |
-    pip install pytest-azurepipelines
-    pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
+    pytest -v --junitxml=test.junit.xml --html=pytest_MuBuild_report.html --self-contained-html --cov=MuBuild --cov-report html:cov_html --cov-report xml:cov.xml --cov-config .coveragerc
   displayName: 'Run unit tests'
+
+- task: PublishTestResults@2
+  displayName: 'Publish junit test results'
+  continueOnError: true
+  condition: succeededOrFailed()
+  inputs:
+    testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit
+    testResultsFiles: 'test.junit.xml'
+    mergeTestResults: true # Optional
+    publishRunAttachments: true # Optional
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: 'pytest_MuBuild_report.html'
+    artifactName: 'MuBuild unit test report'
+  continueOnError: true
+  condition: succeededOrFailed()
+
+# Publish Code Coverage Results
+# Publish Cobertura code coverage results
+- task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: 'cobertura' # Options: cobertura, jaCoCo
+    summaryFileLocation: $(System.DefaultWorkingDirectory)/cov.xml
+    reportDirectory: $(System.DefaultWorkingDirectory)/cov_html
+  condition: succeededOrFailed()
 
 - script: |
     pip install wheel
     python setup.py sdist bdist_wheel
   displayName: 'Preparing for release'
 
+# - task: TwineAuthenticate@0
+#   inputs:
+#     externalFeeds: 'Pypi-MuPip'
+
+# - script: 'twine upload -r Pypi-MuPip --config-file $(PYPIRC_PATH) dist/*'
+#   displayName: 'Publish to pypi'
+
 - task: CopyFiles@2
   inputs:
-    contents: library-basic/dist/**
+    contents: dist/**
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1
