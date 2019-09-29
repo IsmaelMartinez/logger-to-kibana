@@ -35,12 +35,14 @@ steps:
     pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
   displayName: 'Run unit tests'
 
-- script: |
-    python -m pip install wheel
-    python setup.py sdist bdist_wheel
-  displayName: 'Preparing for release'
-
-- task: TwineAuthenticate@1
+- task: CopyFiles@2
   inputs:
-    artifactFeed: 'ismaelmartinez0550'
+    contents: \**
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: logger_to_kibana
+
     
