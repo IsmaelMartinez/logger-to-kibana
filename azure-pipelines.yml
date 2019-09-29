@@ -37,7 +37,6 @@ steps:
 
 - script: |
     python -m pip install wheel
-    python -m pip install pygments
     python setup.py sdist bdist_wheel
   displayName: 'Preparing for release'
 
@@ -45,7 +44,3 @@ steps:
   inputs:
     artifactFeed: 'ismaelmartinez0550'
     
-- task: PyPIPublisher@0
-  inputs:
-    pypiConnection: 'Test PyPi'
-    packageDirectory: 'src'
