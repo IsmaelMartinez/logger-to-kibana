@@ -23,7 +23,7 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
   displayName: 'Install dependencies'
 
 - script: |
@@ -31,12 +31,13 @@ steps:
   displayName: 'Run Lint Tests'
 
 - script: |
-    pip install pytest-azurepipelines
+    python -m pip install pytest-azurepipelines
     pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
   displayName: 'Run unit tests'
 
 - script: |
-    pip install wheel
+    python -m pip install wheel
+    python -m pip install pygments
     python setup.py sdist bdist_wheel
   displayName: 'Preparing for release'
 
