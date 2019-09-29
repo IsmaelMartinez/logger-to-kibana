@@ -31,7 +31,7 @@ steps:
   displayName: 'Run Lint Tests'
 
 - script: |
-    pytest -v --junitxml=test.junit.xml --html=pytest_MuBuild_report.html --self-contained-html --cov=MuBuild --cov-report html:cov_html --cov-report xml:cov.xml --cov-config .coveragerc
+    pytest -v --junitxml=test.junit.xml --html=pytest_report.html --self-contained-html --cov=src --cov-report html:cov_html --cov-report xml:cov.xml --cov-config .coveragerc
   displayName: 'Run unit tests'
 
 - task: PublishTestResults@2
@@ -46,8 +46,8 @@ steps:
 
 - task: PublishBuildArtifacts@1
   inputs:
-    pathtoPublish: 'pytest_MuBuild_report.html'
-    artifactName: 'MuBuild unit test report'
+    pathtoPublish: 'pytest_report.html'
+    artifactName: 'Unit test report'
   continueOnError: true
   condition: succeededOrFailed()
 
