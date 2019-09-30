@@ -2,10 +2,6 @@
 # Create and test a Python package on multiple Python versions.
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
-trigger:
-- master
-
 pool:
   vmImage: 'ubuntu-latest'
 strategy:
@@ -25,29 +21,33 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    flake8 src test
+    python -m flake8 src test
   displayName: 'Run Lint Tests'
 
 - script: |
     python -m pip install --upgrade pytest-azurepipelines
-    pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
+    python -m pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
   displayName: 'Run unit tests'
 
 - script: |
     python -m pip install --upgrade wheel
     python -m pip install --upgrade twine
   displayName: 'Installing wheel and twine'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - script: |
     rm -rf dist
     python setup.py sdist bdist_wheel
   displayName: 'Running wheel'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - task: TwineAuthenticate@1
   displayName: 'Twine Authenticate'
   inputs:
     pythonUploadServiceConnection: 'pypi_test'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - script: |
     python -m twine upload -r pypi_test --config-file ${PYPIRC_PATH} dist/*
   displayName: 'Publish artifacts'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
