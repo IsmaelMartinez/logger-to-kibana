@@ -46,6 +46,8 @@ steps:
 
 - task: TwineAuthenticate@1
   displayName: 'Twine Authenticate'
+  inputs:
+    pythonUploadServiceConnection: 'pypi_test'
 
 - script: |
     python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
