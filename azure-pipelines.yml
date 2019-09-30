@@ -21,12 +21,12 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    flake8 src test
+    python -m flake8 src test
   displayName: 'Run Lint Tests'
 
 - script: |
     python -m pip install --upgrade pytest-azurepipelines
-    pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
+    python -m pytest tests --doctest-modules --junitxml=junit/test-results.xml --cov=src --cov-report=xml --cov-report=html
   displayName: 'Run unit tests'
 
 - script: |
