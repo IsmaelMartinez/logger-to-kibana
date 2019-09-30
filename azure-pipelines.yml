@@ -41,6 +41,7 @@ steps:
   displayName: 'Installing wheel and twine'
 
 - script: |
+    rm -rf dist
     python setup.py sdist bdist_wheel
   displayName: 'Running wheel'
 
