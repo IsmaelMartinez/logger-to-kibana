@@ -36,12 +36,12 @@ steps:
   displayName: 'Run unit tests'
 
 - script: |
-   pip install wheel
-   pip install twine
+    python -m pip install wheel
+    python -m pip install twine
   displayName: 'Installing wheel and twine'
 
 - script: |
-   python setup.py bdist_wheel
+    python setup.py bdist_wheel
   displayName: 'Running wheel'
 
 - task: TwineAuthenticate@1
@@ -49,6 +49,6 @@ steps:
   inputs:
     pythonUploadServiceConnection: pypitest
 
-- script: |
-   python -m twine upload -r "myTestFeed" --config-file $(PYPIRC_PATH) dist/*.whl
-  displayName: 'Runing twine upload'
+# - script: |
+#    python -m twine upload -r "myTestFeed" --config-file $(PYPIRC_PATH) dist/*.whl
+#   displayName: 'Runing twine upload'
