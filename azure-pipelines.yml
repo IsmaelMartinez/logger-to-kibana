@@ -50,5 +50,5 @@ steps:
     pythonUploadServiceConnection: 'pypi_test'
 
 - script: |
-    python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
-  displayName: 'Running twine upload'
+    python -m twine upload -r pypi_test --config-file ${PYPIRC_PATH} dist/*
+  displayName: 'Publish artifacts'
