@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: logger-to-kibana
+Version: 0.0.2
+Summary: Import logger messages from a file and                  generates a Kibana Visualisation
+Home-page: UNKNOWN
+Author: UNKNOWN
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
