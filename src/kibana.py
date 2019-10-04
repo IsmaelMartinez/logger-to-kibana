@@ -1,16 +1,12 @@
 """
 This function handles the generation of the kibana visualisation
 """
-import configparser
+from src.configuration import config
+
 import json
 import requests
 from pathlib import Path
 from src.utils import visualisation, table
-
-config = configparser.ConfigParser()
-config.read("settings.ini")
-
-baseUrl = config.get('kibana', 'BaseUrl')
 
 
 def generate_and_send_visualisation(path_name: str, items: []):
@@ -29,7 +25,7 @@ def send_visualisation(path_name: str, visualisation: dict):
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": visualisation}
     url = (
-        f"""{baseUrl}/api/saved_objects/visualization/"""
+        f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
         f"""generated-{folder_name}?overwrite=true"""
     )
 

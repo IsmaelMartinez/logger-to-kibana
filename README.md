@@ -7,6 +7,12 @@
 
 This project is inteded to generate view from the log messages encountered.
 
+You will need to install the dependences by running
+
+```bash
+pip install -r requirements.txt
+```
+
 To get the programs help just type:
 
 ```bash
@@ -31,9 +37,16 @@ Commands:
                              send
 ```
 
+## Default settings
+
+The default settings can be found in the [settings.ini](settings.ini) file. You can provide a different settings
+file by specifying it as an environment variable LOGGER_TO_KIBANA_CONFIG
+
+## commands
+
 The current available commands are:
 
-## process
+### process
 
 Process a folder and prints out the processed functions/logs in the following format:
 
@@ -49,7 +62,7 @@ python main.py process -f <folder_location>
 
 Check the table under [How does it work] section to get more info about log_type and log_filter.
 
-## process_and_generate
+### process_and_generate
 
 Process a folder (as shown in the process section) and generates a table visualisation for kibana.
 
@@ -59,7 +72,7 @@ To execute the command run:
 python main.py process_and_generate -f <folder_location>
 ```
 
-## process_generate_and_send
+### process_generate_and_send
 
 Process a folder, generates a table visualisation for kibana and send it to kibana (currently in localhost:5601)
 
@@ -69,7 +82,7 @@ To execute the command run:
 python main.py process_and_generate -f <folder_location>
 ```
 
-## How does it work
+### How does it work
 
 This program uses different regex `detectors` to filter logs and files to process.
 
