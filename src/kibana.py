@@ -8,6 +8,7 @@ import requests
 from pathlib import Path
 from src.utils import visualisation, table
 
+
 def generate_and_send_visualisation(path_name: str, items: []):
     vis = generate_folder_visualisation(path_name, items)
     send_visualisation(path_name, vis)

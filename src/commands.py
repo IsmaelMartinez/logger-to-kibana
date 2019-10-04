@@ -5,6 +5,7 @@ import click
 import src.file_processor as processor
 import src.kibana as kib
 
+
 @click.group()
 def commands():
     """
@@ -18,6 +19,7 @@ def commands():
               required=False, metavar="str", help="Folder to read")
 def process(folder: str):
     print(processor.process_folder(folder))
+
 
 @commands.command(
     "process_and_generate",
