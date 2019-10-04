@@ -7,6 +7,12 @@
 
 This project is inteded to generate view from the log messages encountered.
 
+You will need to install the dependences by running
+
+```bash
+pip install -r requirements.txt
+```
+
 To get the programs help just type:
 
 ```bash

@@ -5,25 +5,22 @@ the function, log_message and level
 """
 
 import re
-import configparser
+from src.configuration import config
 import glob
 
-config = configparser.ConfigParser()
-config.read("settings.ini")
-
-files_match = config.get('file_parsers', 'FilesMatchFilter')
-log_debug_detector = config.get('file_parsers', 'LogDebugDetector')
-log_debug_filter = config.get('file_parsers', 'LogDebugFilter')
-log_info_detector = config.get('file_parsers', 'LogInfoDetector')
-log_info_filter = config.get('file_parsers', 'LogInfoFilter')
-log_warn_detector = config.get('file_parsers', 'LogWarnDetector')
-log_warn_filter = config.get('file_parsers', 'LogWarnFilter')
-log_error_detector = config.get('file_parsers', 'LogErrorDetector')
-log_error_filter = config.get('file_parsers', 'LogErrorFilter')
-log_critical_detector = config.get('file_parsers', 'LogCriticalDetector')
-log_critical_filter = config.get('file_parsers', 'LogCriticalFilter')
-log_exception_detector = config.get('file_parsers', 'LogExceptionDetector')
-log_exception_filter = config.get('file_parsers', 'LogExceptionFilter')
+files_match = config.file_parsers.FilesMatchFilter
+log_debug_detector = config.file_parsers.LogDebugDetector
+log_debug_filter = config.file_parsers.LogDebugFilter
+log_info_detector = config.file_parsers.LogInfoDetector
+log_info_filter = config.file_parsers.LogInfoFilter
+log_warn_detector = config.file_parsers.LogWarnDetector
+log_warn_filter = config.file_parsers.LogWarnFilter
+log_error_detector = config.file_parsers.LogErrorDetector
+log_error_filter = config.file_parsers.LogErrorFilter
+log_critical_detector = config.file_parsers.LogCriticalDetector
+log_critical_filter = config.file_parsers.LogCriticalFilter
+log_exception_detector = config.file_parsers.LogExceptionDetector
+log_exception_filter = config.file_parsers.LogExceptionFilter
 
 FILE_RESULTS = []
 
@@ -64,6 +61,7 @@ LOG_MAPPING = [
 def process_folder(folder: str) -> []:
     if not folder:
         folder = ""
+    print(files_match)
     for file in glob.iglob(folder + files_match, recursive=True):
         read_file_for_logs(file)
     return FILE_RESULTS
