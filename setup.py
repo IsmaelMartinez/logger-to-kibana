@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='logger-to-kibana',
-    version='0.0.7',
+    version='0.0.8',
     description='Import logger messages from a file and \
                  generates a Kibana Visualisation',
     author='Ismael Martinez Ramos',

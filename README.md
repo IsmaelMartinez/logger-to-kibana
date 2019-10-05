@@ -7,6 +7,8 @@
 
 This project is inteded to generate view from the log messages encountered.
 
+The python executable can be found in [https://pypi.org/project/logger-to-kibana/](https://pypi.org/project/logger-to-kibana/)
+
 You will need to install the dependences by running
 
 ```bash
