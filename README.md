@@ -1,7 +1,7 @@
-# logger_to_kibana
+# logger-to-kibana
 
-[![Build Status](https://dev.azure.com/ismaelmartinez0550/logger_to_kibana/_apis/build/status/IsmaelMartinez.logger_to_kibana?branchName=master)](https://dev.azure.com/ismaelmartinez0550/logger_to_kibana/_build/latest?definitionId=2&branchName=master)
-[![DepShield Badge](https://depshield.sonatype.org/badges/IsmaelMartinez/logger_to_kibana/depshield.svg)](https://depshield.github.io)
+[![Build Status](https://dev.azure.com/ismaelmartinez0550/logger-to-kibana/_apis/build/status/IsmaelMartinez.logger-to-kibana?branchName=master)](https://dev.azure.com/ismaelmartinez0550/logger-to-kibana/_build/latest?definitionId=2&branchName=master)
+[![DepShield Badge](https://depshield.sonatype.org/badges/IsmaelMartinez/logger-to-kibana/depshield.svg)](https://depshield.github.io)
 
 ---
 
