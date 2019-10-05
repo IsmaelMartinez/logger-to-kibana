@@ -5,23 +5,20 @@ from src.configuration import config
 
 import json
 import requests
-from pathlib import Path
 from src.utils import visualisation, table
 
 
-def generate_and_send_visualisation(path_name: str, items: []):
-    vis = generate_folder_visualisation(path_name, items)
-    send_visualisation(path_name, vis)
+def generate_and_send_visualisation(folder_name: str, items: []):
+    vis = generate_folder_visualisation(folder_name, items)
+    send_visualisation(folder_name, vis)
 
 
-def generate_folder_visualisation(path_name: str, items: []) -> dict:
-    folder_name = Path(path_name).parts[-1]
+def generate_folder_visualisation(folder_name: str, items: []) -> dict:
     vis_state = table.generate_table_vis_state(folder_name, items)
     return visualisation.generate_visualisation(folder_name, vis_state)
 
 
-def send_visualisation(path_name: str, visualisation: dict):
-    folder_name = Path(path_name).parts[-1]
+def send_visualisation(folder_name: str, visualisation: dict):
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": visualisation}
     url = (

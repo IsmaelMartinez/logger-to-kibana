@@ -3,6 +3,7 @@ from unittest.mock import patch
 from pytest import mark
 
 
+@patch.object(commands, "get_folder_name")
 @patch.object(commands.kib, "generate_folder_visualisation")
 @patch.object(commands.processor, "process_folder")
 @mark.parametrize(
@@ -13,13 +14,15 @@ from pytest import mark
     ]
 )
 def test_process_and_generate_visualisations(
-        process_folder, generate_folder_visualisation,
+        process_folder, generate_folder_visualisation, get_folder_name,
         folder, process_expected, generate_expected):
     commands.process_and_generate_visualisations(folder)
     assert process_folder.call_count == process_expected
     assert generate_folder_visualisation.call_count == generate_expected
+    assert get_folder_name.call_count == 1
 
 
+@patch.object(commands, "get_folder_name")
 @patch.object(commands.kib, "generate_and_send_visualisation")
 @patch.object(commands.processor, "process_folder")
 @mark.parametrize(
@@ -30,11 +33,25 @@ def test_process_and_generate_visualisations(
     ]
 )
 def test_process_generate_and_send_visualisations(
-        process_folder, generate_folder_visualisation,
+        process_folder, generate_folder_visualisation, get_folder_name,
         folder, process_expected, generate_expected):
     commands.process_generate_and_send_visualisations(folder)
     assert process_folder.call_count == process_expected
     assert generate_folder_visualisation.call_count == generate_expected
+    assert get_folder_name.call_count == 1
+
+
+@mark.parametrize(
+    "folder, expected",
+    [
+        ("one", "one"),
+        ("/", "/"),
+        ("/bla/ble", "ble"),
+        ("/bla/ble/bli", "bli"),
+    ]
+)
+def test_get_folder_name(folder, expected):
+    assert commands.get_folder_name(folder) == expected
 
 
 # # # #

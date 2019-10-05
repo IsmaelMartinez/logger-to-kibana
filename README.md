@@ -93,6 +93,8 @@ The current available detectors are:
 | Detector | Default Value | Propose |
 |---|---|---|
 | FilesMatchFilter | app/src/**/*.py | Filter the files to process in the provided folder |
+| FunctionMappingDetector | def | Detect a function |
+| FunctionMappingFilter | (?<=def ).*?(?=\() | Filter the function name |
 | LogDebugDetector | LOG.debug | Detect the log debug message |
 | LogDebugFilter | (?<=LOG.debug\(["\']).*?(?=["\']) | Filter the log debug message |
 | LogInfoDetector | LOG.info | Detect the log info message |
@@ -120,7 +122,7 @@ The commands for the application are done in the following logical order.
     process -> generate -> send
 ```
 
-As an example, when processing the following file:
+As an example, when processing a file in `tests/unit/resources/example.py` with the content:
 
 ```python
 def lambda_handler(_event: dict, _context):
@@ -136,12 +138,18 @@ def lambda_handler(_event: dict, _context):
 Will return the next object:
 
 ```python
-[{'type': 'debug', 'query': 'message: "Initialising"', 'label': 'debug: Initialising'},
-{'type': 'info', 'query': 'message: "Processing"', 'label': 'info: Processing'},
-{'type': 'warn', 'query': 'message: "Success"', 'label': 'warn: Success'},
-{'type': 'error', 'query': 'message: "Failure"', 'label': 'error: Failure'},
-{'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'},
-{"type": "exception", "query": 'message: "Exception"', "label": "exception: Exception"}]
+[{'filename': 'tests/unit/resources/example.py', 'function': 'lambda_handler',
+'type': 'debug', 'query': 'message: "Initialising"', 'label': 'debug: Initialising'},
+{'filename': 'tests/unit/resources/example.py', 'function': 'lambda_handler',
+'type': 'info', 'query': 'message: "Processing"', 'label': 'info: Processing'},
+{'filename': 'tests/unit/resources/example.py', 'function': 'lambda_handler',
+'type': 'warn', 'query': 'message: "Success"', 'label': 'warn: Success'},
+{'filename': 'tests/unit/resources/example.py', 'function': 'lambda_handler',
+'type': 'error', 'query': 'message: "Failure"', 'label': 'error: Failure'},
+{'filename': 'tests/unit/resources/example.py', 'function': 'lambda_handler',
+'type': 'critical', 'query': 'message: "Bananas"', 'label': 'critical: Bananas'},
+{'filename': 'tests/unit/resources/example.py', 'function': 'lambda_handler',
+'type': 'exception', 'query': 'message: "Exception"', 'label': 'exception: Exception'}]
 ```
 
 Generate, will generate a table visualisation with filters for all the logs that have found.

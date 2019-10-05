@@ -4,6 +4,7 @@ This file contains the commands available for the program
 import click
 import src.file_processor as processor
 import src.kibana as kib
+from pathlib import Path
 
 
 @click.group()
@@ -43,9 +44,14 @@ def process_generate_and_send(folder: str):
 
 def process_and_generate_visualisations(folder: str):
     processed = processor.process_folder(folder)
-    print(kib.generate_folder_visualisation(folder, processed))
+    print(kib.generate_folder_visualisation(
+            get_folder_name(folder), processed))
 
 
 def process_generate_and_send_visualisations(folder: str):
     processed = processor.process_folder(folder)
-    kib.generate_and_send_visualisation(folder, processed)
+    kib.generate_and_send_visualisation(get_folder_name(folder), processed)
+
+
+def get_folder_name(folder: str) -> str:
+    return Path(folder).parts[-1]
