@@ -6,6 +6,7 @@ import src.file_processor as processor
 import src.kibana as kib
 from pathlib import Path
 
+
 @click.group()
 def commands():
     """
