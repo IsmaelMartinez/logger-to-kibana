@@ -14,8 +14,8 @@ def generate_and_send_visualization(folder_name: str, items: []):
 
 
 def generate_folder_visualization(folder_name: str, items: []) -> dict:
-    #https://docs.python.org/3/library/itertools.html#itertools.groupby
     return visualization.generate_visualization(folder_name, items)
+# https://docs.python.org/3/library/itertools.html#itertools.groupby
 
 
 def send_visualization(folder_name: str, visualization: dict):
