@@ -1,26 +1,25 @@
 """
-This function handles the generation of the kibana visualisation
+This function handles the generation of the kibana visualization
 """
 from src.configuration import config
 
 import json
 import requests
-from src.utils import visualisation, table
+from src.utils import visualization
 
 
-def generate_and_send_visualisation(folder_name: str, items: []):
-    vis = generate_folder_visualisation(folder_name, items)
-    send_visualisation(folder_name, vis)
+def generate_and_send_visualization(folder_name: str, items: []):
+    vis = generate_folder_visualization(folder_name, items)
+    send_visualization(folder_name, vis)
 
 
-def generate_folder_visualisation(folder_name: str, items: []) -> dict:
-    vis_state = table.generate_table_vis_state(folder_name, items)
-    return visualisation.generate_visualisation(folder_name, vis_state)
+def generate_folder_visualization(folder_name: str, items: []) -> dict:
+    return visualization.generate_visualization(folder_name, items)
 
 
-def send_visualisation(folder_name: str, visualisation: dict):
+def send_visualization(folder_name: str, visualization: dict):
     headers = {"kbn-xsrf": "true"}
-    data = {"attributes": visualisation}
+    data = {"attributes": visualization}
     url = (
         f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
         f"""generated-{folder_name}?overwrite=true"""

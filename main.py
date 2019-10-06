@@ -3,7 +3,7 @@ import src.commands as processor
 
 def main():
     """
-    Generate Kibana Visualisation From File
+    Generate Kibana Visualization From File
     """
     processor.commands()
 

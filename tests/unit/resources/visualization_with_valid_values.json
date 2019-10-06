@@ -2,6 +2,6 @@
     "title": "[Generated] - Valid",
     "visState": "{\"title\": \"[Generated] - Valid\", \"type\": \"table\", \"params\": {\"perPage\": 20, \"showPartialRows\": false, \"showMetricsAtAllLevels\": false, \"sort\": {\"columnIndex\": null, \"direction\": null}, \"showTotal\": false, \"totalFunc\": \"sum\"}, \"aggs\": [{\"id\": \"1\", \"enabled\": true, \"type\": \"count\", \"schema\": \"metric\", \"params\": {}}, {\"id\": \"2\", \"enabled\": true, \"type\": \"filters\", \"schema\": \"bucket\", \"params\": {\"filters\": []}}]}",
     "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\": \"90943e30-9a47-11e8-b64d-95841ca0b247\", \"query\": {\"query\": \"\", \"language\": \"lucene\"}, \"filter\": []}"
+        "searchSourceJSON": "{\"index\": \"59676040-e7fd-11e9-9209-1f165c3af176\", \"query\": {\"query\": \"\", \"language\": \"lucene\"}, \"filter\": []}"
     }
 }

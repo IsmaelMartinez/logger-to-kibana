@@ -24,33 +24,33 @@ def process(folder: str):
 
 @commands.command(
     "process_and_generate",
-    short_help="Process the folder and generate visualisation"
+    short_help="Process the folder and generate visualization"
 )
 @click.option("--folder", "-f",
               required=False, metavar="str", help="Folder to read")
 def process_and_generate(folder: str):
-    process_and_generate_visualisations(folder)
+    process_and_generate_visualizations(folder)
 
 
 @commands.command(
     "process_generate_and_send",
-    short_help="Process the folder, generate visualisation and send"
+    short_help="Process the folder, generate visualization and send"
 )
 @click.option("--folder", "-f",
               required=False, metavar="str", help="Folder to read")
 def process_generate_and_send(folder: str):
-    process_generate_and_send_visualisations(folder)
+    process_generate_and_send_visualizations(folder)
 
 
-def process_and_generate_visualisations(folder: str):
+def process_and_generate_visualizations(folder: str):
     processed = processor.process_folder(folder)
-    print(kib.generate_folder_visualisation(
+    print(kib.generate_folder_visualization(
             get_folder_name(folder), processed))
 
 
-def process_generate_and_send_visualisations(folder: str):
+def process_generate_and_send_visualizations(folder: str):
     processed = processor.process_folder(folder)
-    kib.generate_and_send_visualisation(get_folder_name(folder), processed)
+    kib.generate_and_send_visualization(get_folder_name(folder), processed)
 
 
 def get_folder_name(folder: str) -> str:

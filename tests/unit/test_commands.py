@@ -4,7 +4,7 @@ from pytest import mark
 
 
 @patch.object(commands, "get_folder_name")
-@patch.object(commands.kib, "generate_folder_visualisation")
+@patch.object(commands.kib, "generate_folder_visualization")
 @patch.object(commands.processor, "process_folder")
 @mark.parametrize(
     "folder, process_expected, generate_expected",
@@ -13,17 +13,17 @@ from pytest import mark
         (None, 1, 1),
     ]
 )
-def test_process_and_generate_visualisations(
-        process_folder, generate_folder_visualisation, get_folder_name,
+def test_process_and_generate_visualizations(
+        process_folder, generate_folder_visualization, get_folder_name,
         folder, process_expected, generate_expected):
-    commands.process_and_generate_visualisations(folder)
+    commands.process_and_generate_visualizations(folder)
     assert process_folder.call_count == process_expected
-    assert generate_folder_visualisation.call_count == generate_expected
+    assert generate_folder_visualization.call_count == generate_expected
     assert get_folder_name.call_count == 1
 
 
 @patch.object(commands, "get_folder_name")
-@patch.object(commands.kib, "generate_and_send_visualisation")
+@patch.object(commands.kib, "generate_and_send_visualization")
 @patch.object(commands.processor, "process_folder")
 @mark.parametrize(
     "folder, process_expected, generate_expected",
@@ -32,12 +32,12 @@ def test_process_and_generate_visualisations(
         (None, 1, 1),
     ]
 )
-def test_process_generate_and_send_visualisations(
-        process_folder, generate_folder_visualisation, get_folder_name,
+def test_process_generate_and_send_visualizations(
+        process_folder, generate_folder_visualization, get_folder_name,
         folder, process_expected, generate_expected):
-    commands.process_generate_and_send_visualisations(folder)
+    commands.process_generate_and_send_visualizations(folder)
     assert process_folder.call_count == process_expected
-    assert generate_folder_visualisation.call_count == generate_expected
+    assert generate_folder_visualization.call_count == generate_expected
     assert get_folder_name.call_count == 1
 
 
