@@ -32,7 +32,7 @@ while read -p "Is this a breaking change? (y/N) " yn; do
 done
 while read -p "Are you fixing a bug? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion minor; exit 0;;
+        [Yy] ) bumpversion patch; exit 0;;
         * ) break;;
     esac
 done
