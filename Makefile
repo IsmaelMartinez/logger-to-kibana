@@ -18,3 +18,5 @@ test-ci:
 test:
 	$(VE_BIN)python -m pytest tests --cov=src
 
+lint:
+	python -m flake8 src test
