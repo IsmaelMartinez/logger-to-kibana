@@ -3,10 +3,10 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(
     name='logger-to-kibana',
-    use_scm_version=True,
-    setup_requires=['setuptools_scm'],
+    version='0.1.0',
     description='Import logger messages from a file and \
                  generates a Kibana Visualization',
     author='Ismael Martinez Ramos',
