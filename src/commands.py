@@ -44,13 +44,13 @@ def process_generate_and_send(folder: str):
 
 def process_and_generate_visualizations(folder: str):
     processed = processor.process_folder(folder)
-    print(kib.generate_folder_visualization(
+    print(kib.generate_folder_visualizations(
             get_folder_name(folder), processed))
 
 
 def process_generate_and_send_visualizations(folder: str):
     processed = processor.process_folder(folder)
-    kib.generate_and_send_visualization(get_folder_name(folder), processed)
+    kib.generate_and_send_visualizations(get_folder_name(folder), processed)
 
 
 def get_folder_name(folder: str) -> str:

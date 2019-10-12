@@ -6,6 +6,23 @@ from src.configuration import config
 import json
 import requests
 from src.utils import visualization
+from itertools import groupby
+
+
+def generate_and_send_visualizations(folder_name: str, items: []):
+    grouped_items = group_items(items)
+    for group in grouped_items:
+        title = f"{folder_name} {group[0]['folder']} {group[0]['filename']} {group[0]['function']}"
+        vis = generate_folder_visualization(title, group)
+        send_visualization(title, vis)
+
+
+def group_items(items: []) -> []:
+    groups = []
+    sortedreader = sorted(items, key=lambda d: (d['folder'], d['filename'], d['function']))
+    for k, g in groupby(sortedreader, key=lambda d: (d['folder'], d['filename'], d['function'])):
+        groups.append(list(g))
+    return groups
 
 
 def generate_and_send_visualization(folder_name: str, items: []):
@@ -13,9 +30,15 @@ def generate_and_send_visualization(folder_name: str, items: []):
     send_visualization(folder_name, vis)
 
 
+def generate_folder_visualizations(folder_name: str, items: []) -> dict:
+    grouped_items = group_items(items)
+    for group in grouped_items:
+        title = f"{folder_name} {group[0]['folder']} {group[0]['filename']} {group[0]['function']}"
+        generate_folder_visualization(title, group)
+
+
 def generate_folder_visualization(folder_name: str, items: []) -> dict:
     return visualization.generate_visualization(folder_name, items)
-# https://docs.python.org/3/library/itertools.html#itertools.groupby
 
 
 def send_visualization(folder_name: str, visualization: dict):

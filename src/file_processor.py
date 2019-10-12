@@ -6,6 +6,7 @@ the function, log_message and level
 
 import re
 import glob
+from pathlib import Path
 from src.configuration import config
 
 FILE_RESULTS = []
@@ -71,10 +72,19 @@ def process_line_log_mapping(line: str, function, filename):
             message = re.findall(mapping["filter"], line)
             if message:
                 FILE_RESULTS.append({
-                    "filename": filename,
+                    "folder": get_folder_name(filename),
+                    "filename": get_file_name(filename),
                     "function": function,
                     "type": mapping["type"],
                     "query": 'message: "' + message[0] + '"',
                     "label": mapping["type"] + ": " + message[0]
                 })
                 return
+
+
+def get_folder_name(folder: str) -> str:
+    return Path(folder).parts[-2]
+
+
+def get_file_name(folder: str) -> str:
+    return Path(folder).parts[-1]
