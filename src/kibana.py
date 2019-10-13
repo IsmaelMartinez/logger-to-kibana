@@ -11,30 +11,35 @@ from itertools import groupby
 
 def generate_and_send_visualizations(folder_name: str, items: []):
     grouped_items = group_items(items)
-    for group in grouped_items:
-        title = f"{folder_name} {group[0]['folder']} {group[0]['filename']} {group[0]['function']}"
-        vis = generate_folder_visualization(title, group)
-        send_visualization(title, vis)
+    if grouped_items:
+        for group in grouped_items:
+            title = get_title_from_group(folder_name, group[0])
+            vis = generate_folder_visualization(title, group)
+            send_visualization(title, vis)
+
+
+def get_title_from_group(folder_name: str, group: dict) -> str:
+    return f"{folder_name} {group['subfolder']} {group['filename']} {group['function']}"
+
+
+def generate_folder_visualizations(folder_name: str, items: []) -> []:
+    result = []
+    grouped_items = group_items(items)
+    if grouped_items:
+        for group in grouped_items:
+            title = get_title_from_group(folder_name, group[0])
+            result.append(generate_folder_visualization(title, group))
+    return result
 
 
 def group_items(items: []) -> []:
     groups = []
-    sortedreader = sorted(items, key=lambda d: (d['folder'], d['filename'], d['function']))
-    for k, g in groupby(sortedreader, key=lambda d: (d['folder'], d['filename'], d['function'])):
+    sortedreader = sorted(items, key=lambda d:
+                          (d['subfolder'], d['filename'], d['function']))
+    for k, g in groupby(sortedreader, key=lambda d:
+                        (d['subfolder'], d['filename'], d['function'])):
         groups.append(list(g))
     return groups
-
-
-def generate_and_send_visualization(folder_name: str, items: []):
-    vis = generate_folder_visualization(folder_name, items)
-    send_visualization(folder_name, vis)
-
-
-def generate_folder_visualizations(folder_name: str, items: []) -> dict:
-    grouped_items = group_items(items)
-    for group in grouped_items:
-        title = f"{folder_name} {group[0]['folder']} {group[0]['filename']} {group[0]['function']}"
-        generate_folder_visualization(title, group)
 
 
 def generate_folder_visualization(folder_name: str, items: []) -> dict:

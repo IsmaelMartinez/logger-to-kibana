@@ -15,6 +15,7 @@ from tests import helpers
     ]
 )
 def test_generate_visualization_integration(path_name, vis_state, expected):
+    visualization.config.kibana.VisualizationType = 'table'
     assert helpers.get_test_results_json_file(expected) == \
         visualization.generate_visualization(path_name, vis_state)
 
@@ -80,21 +81,3 @@ def test_set_vis_state_value_error():
 def test_set_vis_state(vis_state, expected):
     visualization.set_vis_state(vis_state)
     assert visualization.visualization['visState'] == expected
-
-
-# @mark.parametrize(
-#     "project, key, vis_state, expected",
-#     [
-#         ("", "", {}, "visualization_with_empty_vis_state.json"),
-#         ("Secret", "Valid", {"some": "here"},
-#          "visualization_with_valid_values.json")
-#     ]
-# )
-# def test_get(project, key, vis_state, expected):
-#     assert get_test_results_json_file(expected) == \
-#         Visualization(project, key, vis_state).get()
-
-
-# def get_test_results_json_file(name: str) -> dict:
-#     with open(os.path.abspath(f"tests/unit/resources/" + name)) as file:
-#         return json.loads(file.read())

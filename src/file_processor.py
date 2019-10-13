@@ -72,7 +72,7 @@ def process_line_log_mapping(line: str, function, filename):
             message = re.findall(mapping["filter"], line)
             if message:
                 FILE_RESULTS.append({
-                    "folder": get_folder_name(filename),
+                    "subfolder": get_folder_name(filename),
                     "filename": get_file_name(filename),
                     "function": function,
                     "type": mapping["type"],
