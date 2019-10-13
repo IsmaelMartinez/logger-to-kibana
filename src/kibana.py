@@ -19,7 +19,8 @@ def generate_and_send_visualizations(folder_name: str, items: []):
 
 
 def get_title_from_group(folder_name: str, group: dict) -> str:
-    return f"{folder_name} {group['subfolder']} {group['filename']} {group['function']}"
+    return (f"{folder_name} {group['subfolder']} "
+            f"{group['filename']} {group['function']}")
 
 
 def generate_folder_visualizations(folder_name: str, items: []) -> []:
