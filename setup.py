@@ -6,17 +6,18 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='logger-to-kibana',
-    version='0.4.1',
+    version='0.4.2',
     description='Import logger messages from a file and \
                  generates a Kibana Visualization',
     author='Ismael Martinez Ramos',
     author_email='ismaelmartinez@gmail.com',
     url='https://github.com/ismaelmartinez/logger-to-kibana',
     long_description=long_description,
+    packages=setuptools.find_packages(),
     long_description_content_type="text/markdown",
     entry_points={
         'console_scripts': [
-            'logger-to-kibana = main:main'
+            'logger-to-kibana = src.commands:commands'
         ]
     },
     license='MIT',
@@ -25,5 +26,4 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=setuptools.find_packages(),
 )
