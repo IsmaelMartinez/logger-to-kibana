@@ -6,6 +6,7 @@ from src.configuration import config
 import json
 import requests
 from src.utils import visualization
+from src.aws_credentials import get_credentials
 from itertools import groupby
 
 
@@ -48,6 +49,13 @@ def generate_folder_visualization(folder_name: str, items: []) -> dict:
 
 
 def send_visualization(folder_name: str, visualization: dict):
+    if config.kibana.AuthType == "aws":
+        aws_kibana(folder_name, visualization)
+    else:
+        base_kibana(folder_name, visualization)
+
+
+def base_kibana(folder_name: str, visualization: dict):
     headers = {"kbn-xsrf": "true"}
     data = {"attributes": visualization}
     url = (
@@ -57,7 +65,26 @@ def send_visualization(folder_name: str, visualization: dict):
 
     response = requests.post(
         url,
-        headers=headers,
+        headers,
         data=json.dumps(data),
     )
+    print(response.text)
+
+
+def aws_kibana(folder_name: str, visualization: dict):
+    headers = {"kbn-xsrf": "true"}
+    data = {"attributes": visualization}
+    url = (
+        f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
+        f"""generated-{folder_name}?overwrite=true"""
+    )
+    auth = get_credentials()
+
+    response = requests.post(
+        url,
+        headers,
+        auth,
+        json=json.dumps(data)
+    )
+
     print(response.text)
