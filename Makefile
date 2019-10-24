@@ -1,5 +1,7 @@
 SHELL := /bin/bash
 VE_BIN := .env/bin/
+AWS_DEFAULT_REGION=eu-west-1
+AWS_REGION=$(AWS_DEFAULT_REGION)
 
 setup: setup-virtual-env setup-hooks install-requirements
 
@@ -20,3 +22,6 @@ test:
 
 lint:
 	python -m flake8 src test
+
+run:
+	python main.py process_generate_and_send -f /projects/BIP/payments/legacy-subscription-service

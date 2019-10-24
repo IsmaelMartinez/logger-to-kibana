@@ -3,14 +3,12 @@ import boto3
 
 region = 'eu-west-1'
 service = 'es'
-
-
-def get_credentials() -> dict:
-    credentials = boto3.Session().get_credentials()
-    return AWS4Auth(
-        credentials.access_key,
-        credentials.secret_key,
-        region,
-        service,
-        session_token=credentials.token
-    )
+session = boto3.Session(region_name=region)
+credentials = session.get_credentials()
+awsAuth = AWS4Auth(
+    credentials.access_key,
+    credentials.secret_key,
+    region,
+    service,
+    session_token=credentials.token
+)
