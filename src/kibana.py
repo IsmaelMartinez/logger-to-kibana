@@ -3,7 +3,6 @@ This function handles the generation of the kibana visualization
 """
 from src.configuration import config
 
-import json
 import requests
 from src.utils import visualization
 from src.aws_credentials import awsAuth
