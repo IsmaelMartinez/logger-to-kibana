@@ -58,7 +58,7 @@ def send_visualization(folder_name: str, visualization: dict):
     response = requests.post(
         url,
         headers=headers,
-        auth=awsAuth if (config.kibana.AuthType == "aws") else None,
+        auth=awsAuth() if (config.kibana.AuthType == "aws") else None,
         json=data
     )
 

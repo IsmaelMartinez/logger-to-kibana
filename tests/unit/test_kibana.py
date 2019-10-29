@@ -48,7 +48,6 @@ def test_generate_folder_visualizations(
     assert generate.call_count == expected_calls
 
 
-
 @pytest.mark.parametrize(
     "folder_name, group, expected",
     [
