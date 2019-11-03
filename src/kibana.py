@@ -5,7 +5,7 @@ from src.configuration import config
 
 import requests
 from src.utils import visualization
-from src.aws_credentials import awsAuth
+from src.aws_credentials import aws_auth
 from itertools import groupby
 
 
@@ -54,11 +54,12 @@ def send_visualization(folder_name: str, visualization: dict):
         f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
         f"""generated-{folder_name}?overwrite=true"""
     )
+    auth = aws_auth() if (config.kibana.AuthType == "aws") else None
 
     response = requests.post(
         url,
         headers=headers,
-        auth=awsAuth() if (config.kibana.AuthType == "aws") else None,
+        auth=auth,
         json=data
     )
 

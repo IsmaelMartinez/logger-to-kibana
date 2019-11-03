@@ -7,7 +7,7 @@ session = boto3.Session(region_name=region)
 credentials = session.get_credentials()
 
 
-def awsAuth() -> dict:
+def aws_auth() -> dict:
     return AWS4Auth(
         credentials.access_key,
         credentials.secret_key,
