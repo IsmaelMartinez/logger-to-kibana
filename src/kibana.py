@@ -47,9 +47,9 @@ def generate_folder_visualization(folder_name: str, items: []) -> dict:
     return visualization.generate_visualization(folder_name, items)
 
 
-def send_visualization(folder_name: str, visualization: dict):
+def send_visualization(folder_name: str, attributes: dict):
     headers = {"kbn-xsrf": "true"}
-    data = {"attributes": visualization}
+    data = {"attributes": attributes}
     url = (
         f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
         f"""generated-{folder_name}?overwrite=true"""
