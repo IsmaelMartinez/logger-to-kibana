@@ -1,4 +1,3 @@
-import pytest
 from src import aws_credentials
 from unittest.mock import patch
 
