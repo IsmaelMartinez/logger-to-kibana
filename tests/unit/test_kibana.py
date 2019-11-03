@@ -48,7 +48,6 @@ def test_generate_folder_visualizations(
     assert generate.call_count == expected_calls
 
 
-
 @pytest.mark.parametrize(
     "folder_name, group, expected",
     [
@@ -107,12 +106,20 @@ def test_generate_folder_visualization(visualization):
     assert visualization.call_count == 1
 
 
+@patch.object(kib, "aws_auth")
+@patch.object(kib, "config")
 @patch.object(kib, "requests")
 @pytest.mark.parametrize(
-    "path_name, items, expected",
+    "path_name, items, return_auth_type, aws_auth_calls",
     [
-        ("path_name", [], {})
+        ("path_name", [], None, 0),
+        ("path_name", [], 'bla', 0),
     ]
 )
-def test_send_visualization(requests, path_name, items, expected):
-    expected == kib.send_visualization(path_name, items)
+def test_send_visualization(
+        requests, config, aws_auth, path_name,
+        items, return_auth_type, aws_auth_calls):
+    config.kibana.AuthType.return_value = return_auth_type
+    kib.send_visualization(path_name, items)
+    assert aws_auth.call_count == aws_auth_calls
+

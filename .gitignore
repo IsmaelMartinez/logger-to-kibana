@@ -9,3 +9,4 @@ junit
 build
 dist
 logger_to_kibana.egg*
+.idea

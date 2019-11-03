@@ -3,9 +3,9 @@ This function handles the generation of the kibana visualization
 """
 from src.configuration import config
 
-import json
 import requests
 from src.utils import visualization
+from src.aws_credentials import aws_auth
 from itertools import groupby
 
 
@@ -47,17 +47,20 @@ def generate_folder_visualization(folder_name: str, items: []) -> dict:
     return visualization.generate_visualization(folder_name, items)
 
 
-def send_visualization(folder_name: str, visualization: dict):
+def send_visualization(folder_name: str, attributes: dict):
     headers = {"kbn-xsrf": "true"}
-    data = {"attributes": visualization}
+    data = {"attributes": attributes}
     url = (
         f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
         f"""generated-{folder_name}?overwrite=true"""
     )
+    auth = aws_auth() if (config.kibana.AuthType == "aws") else None
 
     response = requests.post(
         url,
         headers=headers,
-        data=json.dumps(data),
+        auth=auth,
+        json=data
     )
+
     print(response.text)
