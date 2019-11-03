@@ -61,7 +61,7 @@ To execute the command run:
 python main.py process -f <folder_location>
 ```
 
-Check the table under [How does it work] section to get more info about log_type and log_filter.
+Check the table under [How does it work](https://github.com/IsmaelMartinez/logger-to-kibana#how-does-it-work) section to get more info about log_type and log_filter.
 
 ### process_and_generate
 
@@ -166,7 +166,7 @@ To finish, it sends the generated visualization to Kibana with the following nam
 
 ## Limitations
 
-It only generates the visualizations and not the dashboards. Enhancement #41 should address this.
+It only generates the visualizations and not the dashboards. Enhancement [#41](https://github.com/IsmaelMartinez/logger-to-kibana/issues/41) should address this.
 
-It does not detect logs assign to variables or constants. They will not appear in your visualizations. #40 should address this.
+It does not detect logs assign to variables or constants. They will not appear in your visualizations. [#40](https://github.com/IsmaelMartinez/logger-to-kibana/issues/40) should address this.
 
