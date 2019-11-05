@@ -1,13 +1,17 @@
 import pytest
-import src.kibana as kib
+from src import kibana
+from src.utils import dashboard
 from unittest.mock import patch
 from tests import helpers
+import requests
 
 
-@patch.object(kib, "group_items")
-@patch.object(kib, "get_title_from_group")
-@patch.object(kib, "generate_folder_visualization")
-@patch.object(kib, "send_visualization")
+@patch.object(dashboard, "generate_dashboard")
+@patch.object(kibana, "group_items")
+@patch.object(kibana, "get_title_from_group")
+@patch.object(kibana, "generate_folder_visualization")
+@patch.object(kibana, "send_dashboard")
+@patch.object(kibana, "send_visualization")
 @pytest.mark.parametrize(
     "items_group, expected_calls",
     [
@@ -17,19 +21,22 @@ from tests import helpers
     ]
 )
 def test_generate_and_send_visualizations(
-        send, generate, get_title, group_items,
+        send_vis, send_dash, generate_vis, get_title,
+        group_items, generate_dash,
         items_group, expected_calls):
     group_items.return_value = items_group
-    kib.generate_and_send_visualizations("test", [])
+    kibana.generate_and_send_visualizations("test", [])
     assert group_items.call_count == 1
     assert get_title.call_count == expected_calls
-    assert generate.call_count == expected_calls
-    assert send.call_count == expected_calls
+    assert generate_vis.call_count == expected_calls
+    assert generate_dash.call_count == expected_calls
+    assert send_vis.call_count == expected_calls
+    assert send_dash.call_count == expected_calls
 
 
-@patch.object(kib, "group_items")
-@patch.object(kib, "get_title_from_group")
-@patch.object(kib, "generate_folder_visualization")
+@patch.object(kibana, "group_items")
+@patch.object(kibana, "get_title_from_group")
+@patch.object(kibana, "generate_folder_visualization")
 @pytest.mark.parametrize(
     "items_group, expected_calls",
     [
@@ -42,7 +49,7 @@ def test_generate_folder_visualizations(
         generate, get_title, group_items,
         items_group, expected_calls):
     group_items.return_value = items_group
-    kib.generate_folder_visualizations("test", [])
+    kibana.generate_folder_visualizations("test", [])
     assert group_items.call_count == 1
     assert get_title.call_count == expected_calls
     assert generate.call_count == expected_calls
@@ -60,7 +67,7 @@ def test_generate_folder_visualizations(
     ]
 )
 def test_get_title_from_group(folder_name, group, expected):
-    assert kib.get_title_from_group(folder_name, group) == expected
+    assert kibana.get_title_from_group(folder_name, group) == expected
 
 
 
@@ -84,7 +91,7 @@ def test_get_title_from_group(folder_name, group, expected):
     ]
 )
 def test_group_items(items, expected):
-    assert expected == kib.group_items(items)
+    assert expected == kibana.group_items(items)
 
 
 @pytest.mark.parametrize(
@@ -95,20 +102,20 @@ def test_group_items(items, expected):
     ]
 )
 def test_generate_folder_visualization_integration(path_name, items, expected):
-    kib.config.kibana.VisualizationType = 'table'
+    kibana.config.kibana.VisualizationType = 'table'
     assert helpers.get_test_results_json_file(expected) == \
-        kib.generate_folder_visualization(path_name, items)
+        kibana.generate_folder_visualization(path_name, items)
 
 
-@patch.object(kib.visualization, "generate_visualization")
+@patch.object(kibana.visualization, "generate_visualization")
 def test_generate_folder_visualization(visualization):
-    kib.generate_folder_visualization("test", [])
+    kibana.generate_folder_visualization("test", [])
     assert visualization.call_count == 1
 
 
-@patch.object(kib, "aws_auth")
-@patch.object(kib, "config")
-@patch.object(kib, "requests")
+@patch.object(kibana, "aws_auth")
+@patch.object(kibana, "config")
+@patch.object(requests, "post")
 @pytest.mark.parametrize(
     "path_name, items, return_auth_type, aws_auth_calls",
     [
@@ -117,9 +124,28 @@ def test_generate_folder_visualization(visualization):
     ]
 )
 def test_send_visualization(
-        requests, config, aws_auth, path_name,
+        post, config, aws_auth, path_name,
         items, return_auth_type, aws_auth_calls):
     config.kibana.AuthType.return_value = return_auth_type
-    kib.send_visualization(path_name, items)
+    kibana.send_visualization(path_name, items)
     assert aws_auth.call_count == aws_auth_calls
+    assert post.call_count == 1
 
+
+@patch.object(kibana, "aws_auth")
+@patch.object(kibana, "config")
+@patch.object(requests, "post")
+@pytest.mark.parametrize(
+    "path_name, items, return_auth_type, aws_auth_calls",
+    [
+        ("path_name", [], None, 0),
+        ("path_name", [], 'bla', 0),
+    ]
+)
+def test_send_dashboard(
+        post, config, aws_auth, path_name,
+        items, return_auth_type, aws_auth_calls):
+    config.kibana.AuthType.return_value = return_auth_type
+    kibana.send_dashboard(path_name, items)
+    assert aws_auth.call_count == aws_auth_calls
+    assert post.call_count == 1

@@ -166,7 +166,5 @@ To finish, it sends the generated visualization to Kibana with the following nam
 
 ## Limitations
 
-It only generates the visualizations and not the dashboards. Enhancement [#41](https://github.com/IsmaelMartinez/logger-to-kibana/issues/41) should address this.
-
 It does not detect logs assign to variables or constants. They will not appear in your visualizations. [#40](https://github.com/IsmaelMartinez/logger-to-kibana/issues/40) should address this.
 

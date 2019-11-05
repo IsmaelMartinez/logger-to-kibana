@@ -1,4 +1,3 @@
-import json
 from src.utils import visualization
 from pytest import mark, raises
 from unittest.mock import patch
