@@ -93,32 +93,32 @@ Those can be changed in the [settings.ini](settings.ini) file.
 
 The current available detectors are:
 
-| Detector | Default Value | Propose |
-|---|---|---|
-| FilesMatchFilter | app/src/**/*.py | Filter the files to process in the provided folder |
-| FunctionMappingDetector | def | Detect a function |
-| FunctionMappingFilter | (?<=def ).*?(?=\() | Filter the function name |
-| LogDebugDetector | LOG.debug | Detect the log debug message |
-| LogDebugFilter | (?<=LOG.debug\(["\']).*?(?=["\']) | Filter the log debug message |
-| LogInfoDetector | LOG.info | Detect the log info message |
-| LogInfoFilter | (?<=LOG.info\(["\']).*?(?=["\']) | Filter the log info message |
-| LogWarnDetector | LOG.warn | Detect the log warn message |
-| LogWarnFilter | (?<=LOG.warn\(["\']).*?(?=["\']) | Filter the log warn message |
-| LogErrorDetector | LOG.error | Detect the log error message |
-| LogErrorFilter | (?<=LOG.error\(["\']).*?(?=["\']) | Filter the log error message |
-| LogCriticalDetector | LOG.critical | Detect the log critical message |
-| LogCriticalFilter | (?<=LOG.critical\(["\']).*?(?=["\']) | Filter the log critical message |
-| LogExceptionDetector | LOG.exception | Detect the log exception message |
-| LogExceptionFilter | (?<=LOG.exception\(["\']).*?(?=["\']) | Filter the log exception message |
+| Detector                | Default Value                         | Propose                                            |
+| ----------------------- | ------------------------------------- | -------------------------------------------------- |
+| FilesMatchFilter        | app/src/**/*.py                       | Filter the files to process in the provided folder |
+| FunctionMappingDetector | def                                   | Detect a function                                  |
+| FunctionMappingFilter   | (?<=def ).*?(?=\()                    | Filter the function name                           |
+| LogDebugDetector        | LOG.debug                             | Detect the log debug message                       |
+| LogDebugFilter          | (?<=LOG.debug\(["\']).*?(?=["\'])     | Filter the log debug message                       |
+| LogInfoDetector         | LOG.info                              | Detect the log info message                        |
+| LogInfoFilter           | (?<=LOG.info\(["\']).*?(?=["\'])      | Filter the log info message                        |
+| LogWarnDetector         | LOG.warn                              | Detect the log warn message                        |
+| LogWarnFilter           | (?<=LOG.warn\(["\']).*?(?=["\'])      | Filter the log warn message                        |
+| LogErrorDetector        | LOG.error                             | Detect the log error message                       |
+| LogErrorFilter          | (?<=LOG.error\(["\']).*?(?=["\'])     | Filter the log error message                       |
+| LogCriticalDetector     | LOG.critical                          | Detect the log critical message                    |
+| LogCriticalFilter       | (?<=LOG.critical\(["\']).*?(?=["\'])  | Filter the log critical message                    |
+| LogExceptionDetector    | LOG.exception                         | Detect the log exception message                   |
+| LogExceptionFilter      | (?<=LOG.exception\(["\']).*?(?=["\']) | Filter the log exception message                   |
 
 Other configuration available in the settings.ini file are:
 
-| Type | Value | Propose |
-|---|---|---|
-| BaseUrl | [http://localhost:5601](http://localhost:5601) | Kibana base url |
-| Index | 59676040-e7fd-11e9-9209-1f165c3af176 | Kibana index |
-| VisualizationType | metric | Type of visualization to generate. Valid options are metric or table |
-| AuthType | None | Authentication Type. You can use 'aws' to use requests_aws4auth to authenticate with aws  |
+| Type              | Value                                          | Propose                                                                                   |
+| ----------------- | ---------------------------------------------- |------------------------------------------------------------------------------------------ |
+| BaseUrl           | [http://localhost:5601](http://localhost:5601) | Kibana base url                                                                           |
+| Index             | 59676040-e7fd-11e9-9209-1f165c3af176           | Kibana index                                                                              |
+| VisualizationType | metric                                         | Type of visualization to generate. Valid options are metric or table                      |
+| AuthType          | None                                           | Authentication Type. You can use 'aws' to use requests_aws4auth to authenticate with aws  |
 
 ## The process
 
