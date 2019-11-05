@@ -61,7 +61,7 @@ def test_generate_panels_json(generate_panel_for_item,
 
 
 @mark.parametrize(
-    "panel_index, y, id",
+    "panel_index, y, iden",
     [
         (None, None, None),
         (1, None, None),
@@ -72,13 +72,13 @@ def test_generate_panels_json(generate_panel_for_item,
         (1, None, "valid"),
     ]
 )
-def test_generate_panel_for_item_value_error(panel_index, y, id):
+def test_generate_panel_for_item_value_error(panel_index, y, iden):
     with raises(ValueError):
-        dashboard.generate_panel_for_item(panel_index, y, id)
+        dashboard.generate_panel_for_item(panel_index, y, iden)
 
 
 @mark.parametrize(
-    "panel_index, y, id, expected",
+    "panel_index, y, iden, expected",
     [
         (1, 2, "valid", {
             "panelIndex": 1,
@@ -98,9 +98,9 @@ def test_generate_panel_for_item_value_error(panel_index, y, id):
         }),
     ]
 )
-def test_generate_panel_for_item_valid(panel_index, y, id,
+def test_generate_panel_for_item_valid(panel_index, y, iden,
                                        expected):
-    result = dashboard.generate_panel_for_item(panel_index, y, id)
+    result = dashboard.generate_panel_for_item(panel_index, y, iden)
     assert result["panelIndex"] == expected["panelIndex"]
     assert result["gridData"]["y"] == expected["gridData"]["y"]
     assert result["gridData"]["i"] == expected["gridData"]["i"]

@@ -12,9 +12,9 @@ Create then a local environment by using `make setup`.
 
 This will run:
 
-* setup-virtual-env: will create a virtualenv for you
-* setup-hooks: Will setup the pre-push hook (to easily integrate with bumpversion)
-* install-requirements: Will install the requirements
+*  setup-virtual-env: will create a virtualenv for you
+*  setup-hooks: Will setup the pre-push hook (to easily integrate with bumpversion)
+*  install-requirements: Will install the requirements
 
 Note, you can access those commands directly.
 
