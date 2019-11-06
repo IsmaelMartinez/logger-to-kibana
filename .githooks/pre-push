@@ -24,6 +24,23 @@ echo "Please provide the type of changes you are going to push"
 # Read user input, assign stdin to keyboard
 exec < /dev/tty
 
+make lint
+if [ $? -eq 0 ]
+then
+  echo "Linting passes"
+else
+  echo "Found some linting issues. Fix them before commiting" >&2
+  exit 1;
+fi
+make test
+if [ $? -eq 0 ]
+then
+  echo "Unit tests passes"
+else
+  echo "Found unit tests issues. Fix them before commiting" >&2
+  exit 1;
+fi
+
 while read -p "Is this a breaking change? (y/N) " yn; do
     case $yn in
         [Yy] ) bumpversion mayor; exit 0;;
