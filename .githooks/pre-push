@@ -15,15 +15,13 @@
 # the standard input in the form:
 #
 #   <local ref> <local sha1> <remote ref> <remote sha1>
-#
-# This sample shows how to prevent push of commits where the log message starts
-# with "WIP" (work in progress).
 
 echo "Please provide the type of changes you are going to push"
 
 # Read user input, assign stdin to keyboard
 exec < /dev/tty
 
+# Run linting
 make lint
 if [ $? -eq 0 ]
 then
@@ -32,6 +30,8 @@ else
   echo "Found some linting issues. Fix them before commiting" >&2
   exit 1;
 fi
+
+# Run tests
 make test
 if [ $? -eq 0 ]
 then
@@ -41,6 +41,7 @@ else
   exit 1;
 fi
 
+# Bumpversion to rigth one.
 while read -p "Is this a breaking change? (y/N) " yn; do
     case $yn in
         [Yy] ) bumpversion mayor; exit 0;;
@@ -61,7 +62,7 @@ while read -p "Is this a new feature? (y/N) " yn; do
 done
 while read -p "Is this a PR change? (Y/n) " yn; do
     case $yn in
-        [Nn] ) echo "Well, then what are you changing?"; exit 1;;
+        [Nn] ) echo "Well, then what are you changing? Try again."; exit 1;;
         * ) exit 0;;
     esac
 done
