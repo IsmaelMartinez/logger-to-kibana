@@ -64,12 +64,12 @@ def test_generate_panels_json(generate_panel_for_item,
     "panel_index, y, iden",
     [
         (None, None, None),
-        (1, None, None),
+        ("1", None, None),
         (None, 1, None),
         (None, None, "valid"),
-        (1, 1, None),
+        ("1", 1, None),
         (None, 1, "valid"),
-        (1, None, "valid"),
+        ("1", None, "valid"),
     ]
 )
 def test_generate_panel_for_item_value_error(panel_index, y, iden):
@@ -80,16 +80,16 @@ def test_generate_panel_for_item_value_error(panel_index, y, iden):
 @mark.parametrize(
     "panel_index, y, iden, expected",
     [
-        (1, 2, "valid", {
-            "panelIndex": 1,
+        ("1", 2, "valid", {
+            "panelIndex": "1",
             "gridData": {
                 "y": 2,
                 "i": "1"
             },
             "id": "valid",
         }),
-        (123, 456, "Something more substancial", {
-            "panelIndex": 123,
+        ("123", 456, "Something more substancial", {
+            "panelIndex": "123",
             "gridData": {
                 "y": 456,
                 "i": "123"

@@ -49,13 +49,13 @@ def generate_panels_json(items: []):
     json_panels = []
     for num, item in enumerate(items):
         json_panels.append(
-            generate_panel_for_item(num, num*9, str(item)))
+            generate_panel_for_item(str(num), num*9, str(item)))
     dashboard["panelsJSON"] = json.dumps(json_panels)
 
 
 def generate_panel_for_item(panel_index: int, y: int, identifier: str) -> dict:
-    if not isinstance(panel_index, int):
-        raise ValueError("panel_index should be a int")
+    if not isinstance(panel_index, str):
+        raise ValueError("panel_index should be a str")
     if not isinstance(y, int):
         raise ValueError("y should be a int")
     if not isinstance(identifier, str):
@@ -63,7 +63,7 @@ def generate_panel_for_item(panel_index: int, y: int, identifier: str) -> dict:
 
     panels_json["panelIndex"] = panel_index
     panels_json["gridData"]["y"] = y
-    panels_json["gridData"]["i"] = str(panel_index)
+    panels_json["gridData"]["i"] = panel_index
     panels_json["id"] = str(identifier)
 
     return copy.deepcopy(panels_json)

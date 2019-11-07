@@ -125,7 +125,7 @@ Other configuration available in the settings.ini file are:
 The commands for the application are done in the following logical order.
 
 ```bash
-    process -> generate -> send
+process -> generate -> send
 ```
 
 As an example, when processing a file in `tests/unit/resources/example.py` with the content:
