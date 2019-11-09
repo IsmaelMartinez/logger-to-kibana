@@ -1,7 +1,7 @@
 import pytest
 from src import kibana
 from src.utils import dashboard
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 from tests import helpers
 import requests
 
@@ -11,7 +11,7 @@ import requests
 @patch.object(kibana, "get_title_from_group")
 @patch.object(kibana, "generate_folder_visualization")
 @patch.object(kibana, "send_dashboard")
-@patch.object(kibana, "send_visualization")
+@patch.object(kibana, "send_visualization_pool")
 @pytest.mark.parametrize(
     "items_group, expected_calls",
     [
@@ -113,21 +113,42 @@ def test_generate_folder_visualization(visualization):
     assert visualization.call_count == 1
 
 
+@patch.object(kibana, "ThreadPool")
+def test_send_visualization_pool(thread_pool):
+    pool = Mock()
+    thread_pool.return_value = pool
+    title_vis = {
+        "title": "my test title",
+        "vis": {
+            "something": "else"
+        }
+    }
+
+    kibana.send_visualization_pool(title_vis)
+
+    thread_pool.assert_called_once()
+    pool.map.assert_called_once_with(kibana.send_visualization, title_vis)
+    pool.close.assert_called_once()
+    pool.join.assert_called_once()
+
+
 @patch.object(kibana, "aws_auth")
 @patch.object(kibana, "config")
 @patch.object(requests, "post")
 @pytest.mark.parametrize(
-    "path_name, items, return_auth_type, aws_auth_calls",
+    "attributes, return_auth_type, aws_auth_calls",
     [
-        ("path_name", [], None, 0),
-        ("path_name", [], 'bla', 0),
+        ({"title": "path_name",
+          "vis": []}, None, 0),
+        ({"title": "path_name",
+          "vis": []}, 'bla', 0),
     ]
 )
 def test_send_visualization(
-        post, config, aws_auth, path_name,
-        items, return_auth_type, aws_auth_calls):
+        post, config, aws_auth, attributes,
+        return_auth_type, aws_auth_calls):
     config.kibana.AuthType.return_value = return_auth_type
-    kibana.send_visualization(path_name, items)
+    kibana.send_visualization(attributes)
     assert aws_auth.call_count == aws_auth_calls
     assert post.call_count == 1
 
