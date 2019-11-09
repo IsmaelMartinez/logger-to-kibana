@@ -67,5 +67,4 @@ while read -p "Is this a PR change? (Y/n) " yn; do
     esac
 done
 
-exec <&-
-git push --no-verify
+(exec <&-; git push --no-verify)
