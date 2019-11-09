@@ -4,20 +4,27 @@ This function handles the generation of the kibana visualization
 from src.configuration import config
 
 import requests
+import copy
 from src.utils import visualization
 from src.utils import dashboard
 from src.aws_credentials import aws_auth
 from itertools import groupby
+from multiprocessing import Pool as ThreadPool
 
 
 def generate_and_send_visualizations(folder_name: str, items: []):
     grouped_items = group_items(items)
     if grouped_items:
-        generated_ids = []
+        title_vis = []
         for group in grouped_items:
             title = get_title_from_group(folder_name, group[0])
-            vis = generate_folder_visualization(title, group)
-            generated_ids.append(send_visualization(title, vis))
+            vis = copy.copy(generate_folder_visualization(title, group))
+            title_vis.append({
+                "title": title,
+                "vis": vis
+            })
+        generated_ids = send_visualization_pool(title_vis)
+
         generated_dashboard = dashboard.generate_dashboard(folder_name,
                                                            generated_ids)
         send_dashboard(folder_name, generated_dashboard)
@@ -52,10 +59,18 @@ def generate_folder_visualization(folder_name: str, items: []) -> dict:
     return visualization.generate_visualization(folder_name, items)
 
 
-def send_visualization(folder_name: str, attributes: dict) -> str:
+def send_visualization_pool(title_vis: dict) -> []:
+    pool = ThreadPool(100)
+    generated_ids = pool.map(send_visualization, title_vis)
+    pool.close()
+    pool.join()
+    return generated_ids
+
+
+def send_visualization(attributes: dict) -> str:
     headers = {"kbn-xsrf": "true"}
-    data = {"attributes": attributes}
-    generated_id = f"generated-{folder_name}"
+    data = {"attributes": attributes["vis"]}
+    generated_id = f"generated-{attributes['title']}"
     url = (
         f"""{config.kibana.BaseUrl}/api/saved_objects/visualization/"""
         f"""{generated_id}?overwrite=true"""
@@ -69,8 +84,9 @@ def send_visualization(folder_name: str, attributes: dict) -> str:
         auth=auth,
     )
 
-    print(response.text)
-    return str(generated_id)
+    print('send_visualization response:', response.text)
+
+    return generated_id
 
 
 def send_dashboard(folder_name: str, attributes: dict):
@@ -89,4 +105,4 @@ def send_dashboard(folder_name: str, attributes: dict):
         auth=auth,
     )
 
-    print(response.text)
+    print('send_dashboard response:', response.text)

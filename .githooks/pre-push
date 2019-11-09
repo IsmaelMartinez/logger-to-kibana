@@ -27,7 +27,7 @@ if [ $? -eq 0 ]
 then
   echo "Linting passes"
 else
-  echo "Found some linting issues. Fix them before commiting" >&2
+  echo "Found some linting issues. Fix them before committing" >&2
   exit 1;
 fi
 
@@ -37,26 +37,26 @@ if [ $? -eq 0 ]
 then
   echo "Unit tests passes"
 else
-  echo "Found unit tests issues. Fix them before commiting" >&2
+  echo "Found unit tests issues. Fix them before committing" >&2
   exit 1;
 fi
 
 # Bumpversion to rigth one.
 while read -p "Is this a breaking change? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion mayor; exit 0;;
+        [Yy] ) (bumpversion mayor; git push --no-verify); exit 0;;
         * ) break;;
 	esac
 done
 while read -p "Are you fixing a bug? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion patch; exit 0;;
+        [Yy] ) (bumpversion patch; git push --no-verify); exit 0;;
         * ) break;;
     esac
 done
 while read -p "Is this a new feature? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion minor; exit 0;;
+        [Yy] ) (bumpversion minor; git push --no-verify); exit 0;;
         * ) break;;
     esac
 done
