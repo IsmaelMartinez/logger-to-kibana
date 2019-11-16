@@ -39,19 +39,19 @@ IGNORE_PUSH_ERROR="${GREEN}Push ${ORANGE}using ${YELLOW}githook.${PURPLE} Please
 # Bumpversion to rigth one.
 while read -p "Is this a breaking change? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion mayor; git push --no-verify; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
+        [Yy] ) bumpversion mayor; git push --no-verify; git push --no-verify --tags; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
         * ) break;;
 	esac
 done
 while read -p "Are you fixing a bug? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion patch; git push --no-verify; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
+        [Yy] ) bumpversion patch; git push --no-verify; git push --no-verify --tags; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
         * ) break;;
     esac
 done
 while read -p "Is this a new feature? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion minor; git push --no-verify; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
+        [Yy] ) bumpversion minor; git push --no-verify; git push --no-verify --tags; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
         * ) break;;
     esac
 done
