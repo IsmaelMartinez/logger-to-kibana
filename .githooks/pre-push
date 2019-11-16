@@ -1,11 +1,6 @@
 #!/bin/sh
-# Define colors for echo output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-ORANGE='\033[0;33m'
-PURPLE='\033[0;35m'
-NC='\033[0m' # No Color
+
+git rev-parse HEAD
 
 # Run linting
 make lint
@@ -28,25 +23,35 @@ else
 fi
 
 echo "Please provide the type of changes you just commit"
+
 # Read user input, assign stdin to keyboard
 exec < /dev/tty
+
+# Define colors for echo output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+ORANGE='\033[0;33m'
+PURPLE='\033[0;35m'
+NC='\033[0m' # No Color
+IGNORE_PUSH_ERROR="${GREEN}Push ${ORANGE}using ${YELLOW}githook.${PURPLE} Please ignore the ${RED}error !!!"
 
 # Bumpversion to rigth one.
 while read -p "Is this a breaking change? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion mayor; git push --no-verify; echo "${GREEN}Push ${ORANGE}using ${YELLOW}githook.${PURPLE} Please ignore the ${RED}error !!!"; exit 1;;
+        [Yy] ) bumpversion mayor; git push --no-verify; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
         * ) break;;
 	esac
 done
 while read -p "Are you fixing a bug? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion patch; git push --no-verify; echo "${GREEN}Push ${ORANGE}using ${YELLOW}githook.${PURPLE} Please ignore the ${RED}error !!!"; exit 1;;
+        [Yy] ) bumpversion patch; git push --no-verify; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
         * ) break;;
     esac
 done
 while read -p "Is this a new feature? (y/N) " yn; do
     case $yn in
-        [Yy] ) bumpversion minor; git push --no-verify; echo "${GREEN}Push ${ORANGE}using ${YELLOW}githook.${PURPLE} Please ignore the ${RED}error !!!"; exit 1;;
+        [Yy] ) bumpversion minor; git push --no-verify; echo "${IGNORE_PUSH_ERROR}"; exit 1;;
         * ) break;;
     esac
 done
