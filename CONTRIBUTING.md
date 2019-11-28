@@ -18,7 +18,7 @@ This will run:
 
 Note, you can access those commands directly.
 
-Remember to activate your virtual environment by runnign `source .env/bin/activate`
+Remember to activate your virtual environment by running `source .env/bin/activate`
 
 ## Pushing a change
 

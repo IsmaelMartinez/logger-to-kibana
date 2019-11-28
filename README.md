@@ -38,6 +38,8 @@ Commands:
                              send
 ```
 
+I have created a dev.to series explaining how this project works and any learning that I have taken from doing so. You can find it in [https://dev.to/ismaelmartinez/setting-up-my-first-opensource-python-project-4k1o](https://dev.to/ismaelmartinez/setting-up-my-first-opensource-python-project-4k1o)
+
 ## Default settings
 
 The default settings can be found in the [settings.ini](settings.ini) file. You can provide a different settings
@@ -83,7 +85,7 @@ To execute the command run:
 python main.py process_and_generate -f <folder_location>
 ```
 
-### How does it work
+## How does it work
 
 By default, it scans for files under the folder specified and with the  pattern `app/src/**/*.py`. You can specify another patter in the FilesMatchFilter in the [settings.ini](settings.ini)
 
