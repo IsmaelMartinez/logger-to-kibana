@@ -57,6 +57,7 @@ while read -p "Is this a new feature? (y/N) " yn; do
 done
 while read -p "Is this a PR change or Initial push? (Y/n) " yn; do
     case $yn in
+        [Yy] ) echo "${GREEN}Make sure you commit a change before merging to master or this will break the master build!!"; exit 0;;
         [Nn] ) echo "Well, then what are you changing? Try again."; exit 1;;
         * ) exit 0;;
     esac
