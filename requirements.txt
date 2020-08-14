@@ -3,7 +3,7 @@ attrs==19.3.0
 boto3==1.14.42
 botocore==1.17.42
 bumpversion==0.5.3
-certifi==2019.9.11
+certifi==2019.11.28
 chardet==3.0.4
 Click==7.1.2
 coverage==4.5.4
