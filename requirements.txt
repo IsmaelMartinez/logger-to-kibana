@@ -6,7 +6,7 @@ certifi==2019.11.28
 bumpversion==0.6.0
 chardet==3.0.4
 Click==7.1.2
-coverage==4.5.4
+coverage==5.2.1
 docutils==0.16
 entrypoints==0.3
 flake8==3.7.8
