@@ -48,6 +48,6 @@ steps:
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - script: |
-    python -m twine upload -r pypi --config-file ${PYPIRC_PATH} dist/*
+    python -m twine upload --skip-existing -r pypi --config-file ${PYPIRC_PATH} dist/*
   displayName: 'Publish artifacts'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
