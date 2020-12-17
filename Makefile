@@ -3,14 +3,17 @@ VE_BIN := .env/bin/
 AWS_DEFAULT_REGION=eu-west-1
 AWS_REGION=$(AWS_DEFAULT_REGION)
 
-setup: setup-virtual-env setup-hooks install-requirements
+setup: setup-virtual-env setup-hooks upgrade-pip install-requirements
 
 setup-virtual-env:
-	virtualenv --python python3.7 .env
+	virtualenv --python python3.7 .env 
 
 setup-hooks:
 	git config core.hooksPath .githooks
 
+upgrade-pip:
+	$(VE_BIN)python -m pip install --upgrade pip
+	
 install-requirements:
 	$(VE_BIN)pip install -r requirements.txt
 
