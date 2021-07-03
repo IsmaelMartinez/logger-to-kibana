@@ -28,4 +28,4 @@ six==1.16.0
 s3transfer==0.3.7
 urllib3==1.26.6
 wcwidth==0.2.5
-zipp==3.4.1
+zipp==3.5.0
