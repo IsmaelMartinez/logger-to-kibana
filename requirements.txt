@@ -6,7 +6,7 @@ bumpversion==0.6.0
 chardet==4.0.0
 Click==7.1.2
 coverage==5.5
-docutils==0.17.1
+docutils==0.18
 entrypoints==0.3
 flake8==3.7.8
 idna==2.10
