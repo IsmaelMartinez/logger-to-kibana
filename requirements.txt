@@ -8,7 +8,7 @@ Click==7.1.2
 coverage==5.5
 docutils==0.18.1
 entrypoints==0.3
-flake8==3.7.8
+flake8==4.0.1
 idna==2.10
 importlib-metadata==3.10.1
 jmespath==0.10.0
