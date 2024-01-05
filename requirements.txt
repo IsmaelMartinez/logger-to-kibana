@@ -1,5 +1,5 @@
 atomicwrites==1.4.1
-attrs==20.3.0
+attrs==23.2.0
 boto3==1.17.53
 certifi==2020.12.5
 bumpversion==0.6.0
