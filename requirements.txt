@@ -9,7 +9,7 @@ coverage==6.5.0
 docutils==0.20.1
 entrypoints==0.3
 flake8==3.7.8
-idna==3.6
+idna==3.7
 importlib-metadata==4.13.0
 jmespath==0.10.0
 localconfig==1.1.3
